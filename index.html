@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#FBFAF7">
+  <title>Pauta · El programari que posa ordre a la teva acadèmia</title>
+  <meta name="description" content="Pauta organitza horaris, canvis d'hora, faltes i cobraments de tots els professors i famílies de la teva acadèmia. Menys missatges, cap classe sense cobrar i pagament amb targeta.">
+  <meta property="og:title" content="Pauta · Que el teu equip faci classe, no secretaria">
+  <meta property="og:description" content="Horaris, faltes i cobraments amb targeta per a acadèmies i professors particulars, en un sol lloc.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Pauta","applicationCategory":"BusinessApplication","operatingSystem":"Web, iOS, Android","inLanguage":["ca","es"],"description":"Programari de gestió per a acadèmies i professors particulars: horaris, faltes, cobraments amb targeta, famílies i equip."}</script>
+  <style>
+    :root {
+      --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #66636E; --line: #ECE8E1;
+      --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #1E6A50;
+      --cel: #DCEBFA; --cel-i: #21568C; --pre: #FCE6D6; --pre-i: #8A4520; --ros: #F9DFE4; --ros-i: #8E3148;
+      --serif: Fraunces, Georgia, serif; --sans: Manrope, system-ui, sans-serif; --ease: cubic-bezier(.2,.8,.2,1); --spring: cubic-bezier(.34,1.4,.64,1);
+      --shadow: 0 1px 2px rgba(36,34,42,.05), 0 18px 36px -26px rgba(36,34,42,.35);
+      --a-bg: #EFECFA; --a-ink: #2A2540; --a-ink2: #5F5A7A;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 76px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    h1, h2, h3 { margin: 0; font-family: var(--serif); font-variation-settings: 'SOFT' 100; font-weight: 600; letter-spacing: -.02em; line-height: 1.08; }
+    h1 { font-size: clamp(38px, 5.6vw, 68px); } h2 { font-size: clamp(28px, 3.8vw, 46px); } h3 { font-size: 20px; letter-spacing: -.01em; }
+    p { margin: 0; } a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1160px, 100% - 32px); margin: 0 auto; }
+    section { padding: clamp(64px, 9vw, 120px) 0; }
+    .chip { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2) !important; background: none !important; padding: 0 !important; height: auto !important; }
+    .t-lav { background: var(--lav); color: var(--lav-i); } .t-man { background: var(--man); color: var(--man-i); } .t-men { background: var(--men); color: var(--men-i); }
+    .t-cel { background: var(--cel); color: var(--cel-i); } .t-pre { background: var(--pre); color: var(--pre-i); } .t-ros { background: var(--ros); color: var(--ros-i); }
+    .lead { font-size: clamp(18px, 1.7vw, 21px); color: var(--ink2); max-width: 560px; }
+    .center { text-align: center; margin-inline: auto; } .center .lead { margin-inline: auto; }
+    .mark { background: linear-gradient(transparent 58%, var(--mk, var(--man)) 58%, var(--mk, var(--man)) 92%, transparent 92%); padding: 0 .06em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 26px; border-radius: 16px; border: 1px solid transparent; font: 700 16px var(--sans); cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s; white-space: nowrap; }
+    .btn:active { transform: scale(.97); }
+    .btn.prim { background: var(--ink); color: #fff; box-shadow: 0 12px 24px -14px rgba(36,34,42,.8); } .btn.prim:hover { background: #3a3742; }
+    .btn.sec { background: #fff; color: var(--ink); border-color: var(--line); box-shadow: 0 1px 2px rgba(36,34,42,.05); } .btn.sec:hover { border-color: #d6d0c5; }
+    .btn.sm { min-height: 40px; padding: 0 16px; font-size: 14px; border-radius: 12px; }
+    .btn:focus-visible, a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--lav-i); outline-offset: 3px; }
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .tick { position: relative; flex: none; display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: var(--men); margin-top: 3px; }
+    .tick::after { content: ''; position: absolute; left: 7px; top: 4px; width: 5px; height: 9px; border: solid var(--men-i); border-width: 0 2.2px 2.2px 0; transform: rotate(45deg); }
+
+    header.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(251,250,247,.82); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border-bottom: 1px solid rgba(236,232,225,.9); }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font: 700 22px var(--serif); letter-spacing: -.02em; }
+    .nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-weight: 600; font-size: 15px; color: var(--ink2); }
+    .nav ul a:hover { color: var(--ink); }
+    .nav .right { display: flex; align-items: center; gap: 10px; }
+    .lang { display: inline-flex; background: rgba(36,34,42,.06); border-radius: 12px; padding: 3px; }
+    .lang button { border: 0; background: transparent; min-width: 40px; height: 34px; border-radius: 9px; font: 700 13px var(--sans); color: var(--ink2); cursor: pointer; }
+    .lang button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(36,34,42,.15); }
+    @media (max-width: 900px) { .nav ul { display: none; } .nav .login { display: none; } }
+
+    /* ===== Recorregut: escenari fix, mòbil en 3D que viatja d'un costat a l'altre ===== */
+    .tour { position: relative; }
+    .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; perspective: 1600px; perspective-origin: 50% 45%; }
+    .tint { position: absolute; inset: 0; z-index: 0; }
+    .tint::after { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 52%, rgba(255,255,255,.75), rgba(255,255,255,0) 70%); }
+    .st { position: absolute; z-index: 3; top: 64px; bottom: 0; width: min(520px, 42vw); display: flex; flex-direction: column; justify-content: center; gap: 0; visibility: hidden; }
+    .st.l { left: max(24px, calc((100vw - 1160px) / 2 + 16px)); } .st.r { right: max(24px, calc((100vw - 1160px) / 2 + 16px)); }
+    .st .chip { align-self: flex-start; margin-bottom: 18px; }
+    .st h1, .st h2 { margin-bottom: 20px; } .st h2 { font-size: clamp(30px, 3.4vw, 46px); }
+    .st > p { color: var(--ink2); font-size: clamp(17px, 1.5vw, 19px); }
+    .st ul { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; } .st li { display: flex; gap: 12px; font-size: 16px; }
+    .st .row { margin-top: 30px; }
+    .st .micro { margin-top: 22px; font-size: 14px; color: var(--ink2); display: flex; gap: 8px 20px; flex-wrap: wrap; }
+    .st .micro span { display: inline-flex; align-items: center; gap: 8px; } .st .micro .tick { width: 16px; height: 16px; margin: 0; } .st .micro .tick::after { left: 5.5px; top: 3px; width: 4px; height: 7px; border-width: 0 2px 2px 0; }
+    h1, h2, h3, p, li, small, .l, .s { text-wrap: pretty; }
+    .ln, .w { will-change: transform, opacity; }
+    .wm { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .02em .08em; margin-bottom: -.08em; } .w { display: inline-block; transform-origin: 0 100%; }
+    .rig { position: absolute; z-index: 2; left: 50%; top: 0; transform-style: preserve-3d; will-change: transform; }
+    .pshadow { position: absolute; z-index: 1; left: 50%; top: 0; width: 260px; height: 46px; margin-left: -130px; border-radius: 50%; background: radial-gradient(closest-side, rgba(36,34,42,.32), rgba(36,34,42,0)); filter: blur(6px); will-change: transform, opacity; }
+    .dots { position: absolute; z-index: 4; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
+    .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(36,34,42,.18); transition: transform .3s var(--ease), background .3s; } .dots i.on { background: var(--ink); transform: scale(1.35); }
+    .hint { position: absolute; z-index: 4; left: 50%; bottom: 22px; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: var(--ink2); display: flex; align-items: center; gap: 10px; transition: opacity .4s; }
+    .hint i { width: 22px; height: 34px; border: 2px solid #c9c3d6; border-radius: 12px; position: relative; } .hint i::after { content: ''; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: #8e89a0; animation: wheel 1.8s ease-in-out infinite; }
+    @keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+    @media (max-width: 900px) {
+      .st { left: 16px !important; right: 16px !important; width: auto; top: calc(64px + var(--phh, 330px) + 40px); bottom: auto; justify-content: flex-start; }
+      .st h2 { font-size: clamp(25px, 6.6vw, 32px); margin-bottom: 10px; } .st h1 { font-size: clamp(31px, 8.4vw, 40px); margin-bottom: 12px; }
+      .st > p { font-size: 15px; line-height: 1.5; } .st ul, .st .micro, .dots { display: none; } .st .row { margin-top: 16px; gap: 8px; } .st .chip { margin-bottom: 10px; height: 26px; font-size: 10.5px; } .st .btn { min-height: 46px; padding: 0 18px; font-size: 15px; }
+      .hint { display: none; }
+    }
+
+    /* telèfon */
+    .phone-box { position: relative; transform-style: preserve-3d; }
+    .phone { transform-style: preserve-3d; }
+    /* gruix: capes del marc de titani apilades cap enrere, i la tapa de vidre al darrere */
+    .edge { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
+    .edge i { position: absolute; inset: 0; border-radius: 58px; background: linear-gradient(90deg, #9fa2a8 0%, #eceef1 9%, #c3c6cc 30%, #b2b5bb 50%, #c3c6cc 70%, #eceef1 91%, #9fa2a8 100%); transform: translateZ(calc(var(--z) * -1px)); }
+    /* dors d'iPhone 17 Pro (plata): altiplà de càmeres d'alumini a tota l'amplada i vidre a sota.
+       Es veu des del darrere, així que aquí dins l'esquerra i la dreta estan intercanviades. */
+    .edge i.back { overflow: hidden; background: linear-gradient(165deg, #eef0f3 0%, #dfe2e6 55%, #d3d6db 100%); box-shadow: inset 0 0 0 2px #b9bcc2; }
+    .edge i.back .glass { position: absolute; left: 0; right: 0; top: 214px; bottom: 0; background: linear-gradient(170deg, #e9ebee, #dcdfe3); box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
+    .edge i.back .plat { position: absolute; left: 0; right: 0; top: 0; height: 214px; border-radius: 0 0 34px 34px; background: linear-gradient(175deg, #f2f3f5 0%, #e1e3e7 70%, #d6d9de 100%); box-shadow: 0 6px 10px -6px rgba(40,44,52,.35), inset 0 -1px 0 rgba(255,255,255,.8); }
+    .edge i.back .lens { position: absolute; width: 74px; height: 74px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #1b1f2c 0 34%, #2c3245 35% 46%, #0f121b 47% 60%, #6d717b 61% 66%, #c9ccd2 67% 100%); box-shadow: 0 3px 6px rgba(20,22,30,.35), inset 0 0 0 1px rgba(255,255,255,.4); }
+    .edge i.back .lens::after { content: ''; position: absolute; left: 30%; top: 26%; width: 14px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.35); transform: rotate(-30deg); }
+    .edge i.back .dot { position: absolute; border-radius: 50%; }
+    .edge i.back .logo { position: absolute; left: 50%; top: 58%; width: 64px; height: 64px; margin: -32px 0 0 -32px; opacity: .55; filter: grayscale(.3); }
+    .phone { width: 332px; height: 676px; position: absolute; left: 0; top: 0; transform-origin: top left; }
+    .p-frame { position: absolute; inset: 0; border-radius: 58px; padding: 6px; background: linear-gradient(145deg, #f1f2f4 0%, #b9bcc2 22%, #8e9198 50%, #b9bcc2 78%, #eceef1 100%); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.5), inset 0 0 0 3px rgba(0,0,0,.3), 0 50px 70px -30px rgba(36,34,42,.45), 0 20px 30px -20px rgba(36,34,42,.35); }
+    .p-bezel { position: relative; width: 100%; height: 100%; border-radius: 52px; background: #0b0b0c; padding: 8px; }
+    .p-screen { position: relative; width: 100%; height: 100%; border-radius: 44px; overflow: hidden; background: var(--a-bg); isolation: isolate; font-family: var(--sans); color: var(--a-ink); }
+    .p-btn { position: absolute; width: 4px; border-radius: 3px; background: linear-gradient(90deg, #8e9198, #e6e8eb, #8e9198); transform: translateZ(calc(var(--pd, 30px) * -0.5)); }
+    .p-btn.l1 { left: -3px; top: 118px; height: 28px; } .p-btn.l2 { left: -3px; top: 168px; height: 52px; } .p-btn.l3 { left: -3px; top: 232px; height: 52px; } .p-btn.r { right: -3px; top: 190px; height: 82px; }
+    .island { position: absolute; z-index: 30; top: 11px; left: 50%; width: 94px; height: 28px; margin-left: -47px; border-radius: 20px; background: #000; }
+    .island::after { content: ''; position: absolute; right: 12px; top: 9px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2a3a5c, #0a0f1c 70%); }
+    .p-status { position: absolute; z-index: 25; top: 0; left: 0; right: 0; height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 8px 26px 0 30px; font-weight: 800; font-size: 14px; color: #14121f; }
+    .glare { position: absolute; inset: 0; z-index: 40; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 32%, rgba(255,255,255,0) 72%, rgba(255,255,255,.08) 100%); }
+    .home { position: absolute; z-index: 30; left: 50%; bottom: 8px; width: 112px; height: 4.5px; margin-left: -56px; border-radius: 3px; background: rgba(20,18,31,.85); }
+    .tap { position: absolute; z-index: 35; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: rgba(42,37,64,.16); border: 2px solid rgba(42,37,64,.28); opacity: 0; pointer-events: none; }
+    .tap.go { animation: tap .75s var(--ease); } @keyframes tap { 0% { opacity: 0; transform: scale(.4); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.25); } }
+
+    /* pantalles de l'app */
+    .scr { position: absolute; inset: 0; padding: 54px 14px 0; opacity: 0; transform: translateY(14px) scale(.985); transition: opacity .45s var(--ease), transform .55s var(--ease); pointer-events: none; display: flex; flex-direction: column; gap: 9px; }
+    .scr.on { opacity: 1; transform: none; } .scr.leaving { opacity: 0; transform: translateY(-10px) scale(.99); }
+    .scr h4 { margin: 0; font: 600 22px/1.15 var(--serif); letter-spacing: -.02em; color: var(--a-ink); }
+    .eb { font-size: 9.5px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--a-ink2); }
+    .cd { background: #fff; border-radius: 16px; padding: 11px 12px; box-shadow: 0 1px 2px rgba(42,37,64,.05), 0 8px 18px -14px rgba(42,37,64,.35); }
+    .it { display: flex; align-items: center; gap: 9px; } .it .av { width: 32px; height: 32px; border-radius: 11px; display: grid; place-items: center; font-weight: 800; font-size: 13px; flex: none; }
+    .it b { display: block; font-size: 12.5px; line-height: 1.25; } .it small { display: block; font-size: 10.5px; line-height: 1.3; color: var(--a-ink2); } .it .g { flex: 1; min-width: 0; }
+    .big { font: 600 24px/1.1 var(--serif); }
+    .pl { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 99px; font-size: 10px; font-weight: 800; white-space: nowrap; }
+    .pl.men { background: var(--men); color: var(--men-i); } .pl.man { background: var(--man); color: var(--man-i); } .pl.cel { background: var(--cel); color: var(--cel-i); } .pl.pre { background: var(--pre); color: var(--pre-i); } .pl.ros { background: var(--ros); color: var(--ros-i); } .pl.lav { background: var(--lav); color: var(--lav-i); }
+    .tabs { position: absolute; left: 0; right: 0; bottom: 0; height: 78px; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-top: 1px solid rgba(42,37,64,.07); display: flex; padding: 8px 6px 0; z-index: 5; }
+    .tabs div { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; font-weight: 700; color: var(--a-ink2); }
+    .tabs div.on { color: var(--a-ink); } .tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .tabs div.on i { background: var(--lav); } .tabs i { display: grid; place-items: center; width: 40px; height: 26px; border-radius: 13px; }
+    .btnm { display: flex; align-items: center; justify-content: center; height: 36px; border-radius: 12px; font-size: 12px; font-weight: 800; }
+    .btnm.ok { background: var(--men); color: var(--men-i); } .btnm.no { background: var(--ros); color: var(--ros-i); } .btnm.dark { background: var(--a-ink); color: #fff; }
+    .scr.on .a, .scr.leaving .a { animation: rise .55s var(--ease) both; animation-delay: calc(var(--d, 0) * 1s + .2s); }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .sw { position: relative; display: inline-grid; } .sw > * { grid-area: 1 / 1; }
+    .scr .sw .b { opacity: 0; }
+    .scr.on .sw .b, .scr.leaving .sw .b { animation: swIn .4s var(--spring) both; animation-delay: calc(var(--s, 1.4) * 1s); } .scr.on .sw .f, .scr.leaving .sw .f { animation: swOut .3s ease both; animation-delay: calc(var(--s, 1.4) * 1s); }
+    @keyframes swIn { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } } @keyframes swOut { to { opacity: 0; transform: scale(.7); } }
+    .scr.on .press, .scr.leaving .press { animation: press .5s ease both; animation-delay: calc(var(--p, 1.4) * 1s); } @keyframes press { 50% { transform: scale(.93); filter: brightness(.92); } }
+    .scr.on .sw .f.press, .scr.leaving .sw .f.press { animation: press .5s ease both, swOut .3s ease both; animation-delay: calc(var(--p, 1.4) * 1s), calc(var(--s, 1.4) * 1s); }
+    .scr.on .gone, .scr.leaving .gone { animation: gone .45s ease both; animation-delay: calc(var(--s, 2) * 1s); } @keyframes gone { to { opacity: 0; height: 0; padding-top: 0; padding-bottom: 0; margin-top: -9px; overflow: hidden; transform: scale(.96); } }
+    .scr .late { opacity: 0; } .scr.on .late, .scr.leaving .late { animation: lateIn .55s var(--spring) both; animation-delay: calc(var(--s, 2) * 1s); } @keyframes lateIn { from { opacity: 0; transform: translateY(10px) scale(.95); } to { opacity: 1; transform: none; } }
+    .bar { height: 7px; border-radius: 99px; background: rgba(42,37,64,.08); overflow: hidden; } .bar i { display: block; height: 100%; border-radius: 99px; transform-origin: left; }
+    .scr.on .bar i, .scr.leaving .bar i { animation: grow 1.1s var(--ease) both; animation-delay: calc(var(--d, 0) * 1s + .45s); } @keyframes grow { from { transform: scaleX(0); } to { transform: none; } }
+    .sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 8; background: #fff; border-radius: 26px 26px 0 0; padding: 14px 16px 30px; box-shadow: 0 -20px 40px -16px rgba(42,37,64,.35); transform: translateY(105%); }
+    .scr.on .sheet, .scr.leaving .sheet { animation: sheetUp 5.4s var(--ease) both; animation-delay: calc(var(--s, 2) * 1s); } @keyframes sheetUp { 0% { transform: translateY(105%); } 11% { transform: none; } 80% { transform: none; } 92%, 100% { transform: translateY(105%); } }
+    .toastm { position: absolute; z-index: 9; left: 16px; right: 16px; bottom: 92px; background: var(--a-ink); color: #fff; border-radius: 14px; padding: 10px 12px; font-size: 11.5px; font-weight: 700; opacity: 0; transform: translateY(12px); }
+    .scr.on .toastm, .scr.leaving .toastm { animation: lateIn .55s var(--spring) both; animation-delay: calc(var(--s, 6) * 1s); }
+    .check { width: 50px; height: 50px; border-radius: 50%; background: var(--men); display: grid; place-items: center; } .check svg { width: 26px; height: 26px; fill: none; stroke: var(--men-i); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 26; stroke-dashoffset: 26; }
+    .scr.on .check svg, .scr.leaving .check svg { animation: draw .5s ease forwards; animation-delay: calc(var(--s, 3) * 1s + .2s); } @keyframes draw { to { stroke-dashoffset: 0; } }
+    .scr.on .pulse, .scr.leaving .pulse { animation: pulse 1.6s ease-in-out infinite; animation-delay: 2.4s; } @keyframes pulse { 50% { transform: scale(1.12); } }
+    .lock { position: absolute; inset: 0; background: linear-gradient(170deg, #E8E4FA 0%, #DCEBFA 40%, #FCE6D6 100%); }
+    .lock .clock { text-align: center; margin-top: 4px; } .lock .clock b { display: block; font: 300 64px/1 var(--sans); letter-spacing: -.03em; color: #1d1b29; } .lock .clock span { font-size: 13px; font-weight: 700; color: #3d3a52; }
+    .nt { background: rgba(255,255,255,.78); backdrop-filter: blur(12px); border-radius: 16px; padding: 9px 11px; display: flex; gap: 9px; align-items: flex-start; box-shadow: 0 6px 16px -12px rgba(42,37,64,.5); }
+    .nt .ap { width: 26px; height: 26px; border-radius: 7px; background: #8e8aa3; flex: none; display: grid; place-items: center; } .nt .ap svg { width: 15px; height: 15px; fill: #fff; }
+    .nt b { display: block; font-size: 11px; } .nt span { font-size: 11px; line-height: 1.3; color: #2c2a38; } .nt em { font-style: normal; font-size: 9.5px; color: #6b6880; margin-left: auto; white-space: nowrap; }
+    .scr.on .nt, .scr.leaving .nt { animation: ntIn .5s var(--spring) both; animation-delay: calc(var(--d, 0) * 1s + .3s); } @keyframes ntIn { from { opacity: 0; transform: translateY(-16px) scale(.94); } to { opacity: 1; transform: none; } }
+    .ring circle { fill: none; stroke-width: 9; } .ring .bgc { stroke: rgba(42,37,64,.08); } .ring .fg { stroke: var(--men-i); stroke-linecap: round; stroke-dasharray: 214; stroke-dashoffset: 214; transform: rotate(-90deg); transform-origin: center; }
+    .scr.on .ring .fg, .scr.leaving .ring .fg { animation: ringFill 1.6s var(--ease) forwards; animation-delay: .5s; } @keyframes ringFill { to { stroke-dashoffset: 4.3; } }
+
+    /* ===== Seccions següents (entren amb l'scroll i amb inèrcia) ===== */
+    .rv { will-change: transform, opacity; }
+    .calc { background: var(--paper); }
+    .calc .box { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(24px, 4vw, 48px); margin-top: 48px; align-items: start; }
+    .inputs { display: grid; gap: 14px; }
+    .ctl { border-radius: 26px; padding: 20px 22px 18px; background: var(--c); }
+    .ctl .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .ctl .lab { font-weight: 800; font-size: 15px; color: var(--ci); }
+    .ctl .lab small { display: block; font-weight: 600; font-size: 13px; color: #6a6773; margin-top: 2px; }
+    .stp { display: flex; align-items: center; gap: 8px; }
+    .stp button { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #fff; color: var(--ink); font: 600 24px/1 var(--sans); cursor: pointer; box-shadow: 0 2px 8px -3px rgba(36,34,42,.35); transition: transform .15s var(--ease); display: grid; place-items: center; }
+    .stp button:active { transform: scale(.9); }
+    .stp .val { min-width: 88px; text-align: center; font: 600 38px/1 var(--serif); letter-spacing: -.02em; color: var(--ink); }
+    .ctl input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 14px; margin: 16px 0 12px; border-radius: 99px; background: linear-gradient(90deg, var(--ci) var(--p, 50%), rgba(255,255,255,.75) var(--p, 50%)); outline: none; cursor: pointer; }
+    .ctl input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 3px solid var(--ci); box-shadow: 0 4px 12px -4px rgba(36,34,42,.5); cursor: grab; }
+    .ctl input[type=range]::-moz-range-thumb { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 3px solid var(--ci); cursor: grab; }
+    .viz { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-height: 22px; }
+    .viz .pp { width: 26px; height: 26px; display: grid; place-items: center; } .viz .pp svg { display: block; }
+    .viz .dt { width: 8px; height: 8px; border-radius: 3px; background: var(--ci); opacity: .8; }
+    .viz .more { font-size: 13px; font-weight: 800; color: var(--ci); margin-left: 4px; }
+    .viz .hint { font-size: 14px; color: #55525e; } .viz .hint b { color: var(--ink); }
+    .assume2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 4px; }
+    .as { border-radius: 20px; padding: 14px 12px 12px; background: #F6F4F0; text-align: center; }
+    .as .stp { justify-content: center; gap: 6px; } .as .stp button { width: 34px; height: 34px; font-size: 19px; }
+    .as .stp .val { min-width: 54px; font-size: 26px; }
+    .as small { display: block; margin-top: 6px; font-size: 12.5px; line-height: 1.35; color: var(--ink2); }
+    .note { font-size: 13px; color: var(--ink2); margin-top: 2px; }
+    .results { display: grid; gap: 14px; position: sticky; top: 96px; }
+    .res { border-radius: 26px; padding: 26px; } .res .n { font: 600 clamp(40px, 5vw, 60px)/1 var(--serif); letter-spacing: -.03em; } .res .l { font-weight: 700; margin-top: 8px; } .res .s { color: #55525e; font-size: 14.5px; margin-top: 4px; }
+    .res.tot { background: var(--ink); color: #fff; } .res.tot .l { margin: 0 0 8px; color: rgba(255,255,255,.75); } .res.tot .s { color: rgba(255,255,255,.7); }
+    .res.tot .per { display: inline-flex; align-items: baseline; gap: 6px; margin-top: 14px; padding: 8px 14px; border-radius: 14px; background: rgba(255,255,255,.12); font-weight: 700; font-size: 15px; } .res.tot .per b { font: 600 24px/1 var(--serif); }
+    .res .meter { height: 10px; border-radius: 99px; background: rgba(255,255,255,.7); margin-top: 14px; overflow: hidden; } .res .meter i { display: block; height: 100%; border-radius: 99px; background: var(--ink); width: 0; }
+    @media (max-width: 860px) { .calc .box { grid-template-columns: 1fr; } .results { position: static; } .assume2 { grid-template-columns: 1fr; } .as { display: flex; align-items: center; justify-content: space-between; text-align: left; gap: 10px; } .as small { margin: 0; order: -1; flex: 1; } }
+    .plan .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 52px; }
+    .plan .step { background: var(--paper); border-radius: 26px; padding: 30px 26px 28px; box-shadow: var(--shadow); }
+    .plan .num { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; font: 700 26px var(--serif); margin-bottom: 20px; }
+    .plan .step { display: flex; flex-direction: column; align-items: flex-start; } .plan .step h3 { font-size: 22px; }
+    .plan .step p { color: var(--ink2); font-size: 15.5px; margin-top: 8px; }
+    @media (max-width: 820px) { .plan .steps { grid-template-columns: 1fr; } }
+    .trust { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 40px; } .trust span { border-radius: 99px; padding: 10px 18px; font-weight: 700; font-size: 14.5px; }
+    .solo { background: var(--paper); } .solo .box { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: center; border-radius: 32px; padding: clamp(28px, 5vw, 56px); background: var(--cel); }
+    .solo ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; } .solo li { display: flex; gap: 12px; } .solo .tick { background: #fff; } .solo .tick::after { border-color: var(--cel-i); }
+    @media (max-width: 820px) { .solo .box { grid-template-columns: 1fr; } }
+    .faq { max-width: 760px; margin: 40px auto 0; display: grid; gap: 10px; }
+    details.q { background: var(--paper); border-radius: 18px; padding: 0 22px; box-shadow: var(--shadow); }
+    details.q summary { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-weight: 700; font-size: 17px; cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; } details.q summary::after { content: '+'; font-size: 26px; color: var(--ink2); font-weight: 500; transition: transform .25s var(--ease); }
+    details.q[open] summary::after { transform: rotate(45deg); } details.q p { color: var(--ink2); padding: 0 0 20px; }
+    .final .box { text-align: center; border-radius: 36px; padding: clamp(44px, 8vw, 96px) 20px; background: radial-gradient(60% 90% at 0% 0%, rgba(232,228,250,.75), transparent 70%), radial-gradient(55% 90% at 100% 0%, rgba(220,235,250,.7), transparent 70%), radial-gradient(60% 90% at 100% 100%, rgba(252,230,214,.6), transparent 70%), radial-gradient(60% 90% at 0% 100%, rgba(217,242,232,.65), transparent 70%), radial-gradient(40% 60% at 50% 50%, rgba(250,240,200,.45), transparent 75%), #FDFCFA; box-shadow: inset 0 0 0 1px rgba(36,34,42,.05); }
+    .final .lead { margin: 18px auto 32px; } .final .row { justify-content: center; }
+    footer { padding: 40px 0 56px; color: var(--ink2); font-size: 14px; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; } footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="./" aria-label="Pauta"><span id="logo-s"></span>Pauta</a>
+      <ul>
+        <li><a href="funcions" data-es="Funciones">Funcions</a></li>
+        <li><a href="academies" data-es="Academias">Acadèmies</a></li>
+        <li><a href="seguretat" data-es="Seguridad">Seguretat</a></li>
+        <li><a href="preguntes" data-es="Preguntas">Preguntes</a></li>
+      </ul>
+      <div class="right">
+        <div class="lang" role="group" aria-label="Idioma"><button data-l="ca" class="on" aria-pressed="true">CA</button><button data-l="es" aria-pressed="false">ES</button></div>
+        <a class="btn sec sm login" href="/app" data-es="Entrar">Entra</a>
+        <a class="btn prim sm" href="/app?onboarding" data-es="Empieza">Comença</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- RELAT: promesa → problema → el que es perd → solució → transformació -->
+    <section class="tour" id="tour" style="padding:0">
+      <div class="stage" id="stage">
+        <div class="tint" id="tint"></div>
+
+        <article class="st" data-i="0">
+          <span class="chip t-lav ln" data-es="Para academias y profesores particulares">Per a acadèmies i professors particulars</span>
+          <h1 class="split"><span data-es="Que tu equipo">Que el teu equip</span> <span data-es="dé clase,">faci classe,</span> <span data-es="no secretaría.">no secretaria.</span></h1>
+          <p class="ln" data-es="Pauta organiza los horarios, los cambios de hora, las faltas y los cobros de todos tus profesores y familias en un solo lugar. Menos mensajes, ninguna clase sin cobrar y pago con tarjeta.">Pauta organitza els horaris, els canvis d'hora, les faltes i els cobraments de tots els teus professors i famílies en un sol lloc. Menys missatges, cap classe sense cobrar i pagament amb targeta.</p>
+          <div class="row ln"><a class="btn prim" href="/app?onboarding" data-es="Empieza ahora">Comença ara</a><button class="btn sec" data-demo="academy" data-es="Prueba la demo de academia">Prova la demo d'acadèmia</button></div>
+          <div class="micro ln"><span><i class="tick"></i><b style="font-weight:600" data-es="Sin instalar nada">Sense instal·lar res</b></span><span><i class="tick"></i><b style="font-weight:600" data-es="Importa tus alumnos desde Excel">Importa els alumnes des d'un Excel</b></span><span><i class="tick"></i><b style="font-weight:600" data-es="En catalán y castellano">En català i castellà</b></span></div>
+        </article>
+
+        <article class="st" data-i="1">
+          <span class="chip t-pre ln" data-es="El día a día">El dia a dia</span>
+          <h2 class="split" data-es="Cada clase arrastra una cola de mensajes.">Cada classe arrossega una cua de missatges.</h2>
+          <p class="ln" data-es="Cambios de hora, faltas de última hora, «¿cuánto te debo?», «¿te ha llegado el Bizum?». Cada profesor los contesta uno a uno, fuera de horas, y nadie tiene la foto completa.">Canvis d'hora, faltes d'última hora, «quant et dec?», «t'ha arribat el Bizum?». Cada professor els respon d'un en un, fora d'hores, i ningú no té la foto completa.</p>
+          <ul><li class="ln"><i class="tick"></i><span data-es="Horas cada mes que nadie factura">Hores cada mes que ningú no factura</span></li><li class="ln"><i class="tick"></i><span data-es="Información repartida entre móviles, libretas y hojas de cálculo">Informació repartida entre mòbils, llibretes i fulls de càlcul</span></li></ul>
+        </article>
+
+        <article class="st" data-i="2">
+          <span class="chip t-ros ln" data-es="Lo que no se ve">El que no es veu</span>
+          <h2 class="split" data-es="Y cada mes se escapa dinero sin que te des cuenta.">I cada mes s'escapen diners sense que te n'adonis.</h2>
+          <p class="ln" data-es="Una falta sin aviso que no se cobra, una clase cambiada que nadie apunta, un desplazamiento olvidado. Pequeñas cantidades que, al final del curso, suman mucho.">Una falta sense avís que no es cobra, una classe canviada que ningú no apunta, un desplaçament oblidat. Petites quantitats que, a final de curs, sumen molt.</p>
+          <ul><li class="ln"><i class="tick"></i><span data-es="Faltas sin aviso que no se cobran">Faltes sense avís que no es cobren</span></li><li class="ln"><i class="tick"></i><span data-es="Cambios y clases extra que no llegan al recibo">Canvis i classes extra que no arriben al rebut</span></li></ul>
+        </article>
+
+        <article class="st" data-i="3">
+          <span class="chip t-cel ln" data-es="Con Pauta">Amb Pauta</span>
+          <h2 class="split" data-es="Los cambios llegan como peticiones, no como mensajes.">Els canvis arriben com a peticions, no com a missatges.</h2>
+          <p class="ln" data-es="La familia elige entre las horas libres del profesor. Alguien del equipo lo acepta con un toque y la agenda, el profesor y la familia se actualizan a la vez.">La família tria entre les hores lliures del professor. Algú de l'equip ho accepta amb un toc i l'agenda, el professor i la família s'actualitzen alhora.</p>
+          <ul><li class="ln"><i class="tick"></i><span data-es="Nada cambia sin tu aprobación">Res no canvia sense la teva aprovació</span></li><li class="ln"><i class="tick"></i><span data-es="Recordatorios automáticos el día antes">Recordatoris automàtics el dia abans</span></li></ul>
+        </article>
+
+        <article class="st" data-i="4">
+          <span class="chip t-man ln" data-es="Faltas">Faltes</span>
+          <h2 class="split" data-es="Tu política de faltas, aplicada sin discusiones.">La teva política de faltes, aplicada sense discussions.</h2>
+          <p class="ln" data-es="La familia ve qué costará una falta antes de avisar. Si avisa a tiempo, recibe una clase para recuperar; si no, se cobra lo que tú hayas decidido.">La família veu què costarà una falta abans d'avisar. Si avisa a temps, rep una classe per recuperar; si no, es cobra el que tu hagis decidit.</p>
+          <ul><li class="ln"><i class="tick"></i><span data-es="Créditos de recuperación automáticos">Crèdits de recuperació automàtics</span></li><li class="ln"><i class="tick"></i><span data-es="Ningún cobro sorpresa: todo se ve antes">Cap cobrament sorpresa: tot es veu abans</span></li></ul>
+        </article>
+
+        <article class="st" data-i="5">
+          <span class="chip t-men ln" data-es="Cobros">Cobraments</span>
+          <h2 class="split" data-es="Las familias pagan con tarjeta, desde el móvil.">Les famílies paguen amb targeta, des del mòbil.</h2>
+          <p class="ln" data-es="Cada mes, un recibo claro por familia, con las faltas, los bonos y los desplazamientos ya calculados. Pagan en un toque y el recibo queda marcado como pagado. Si lo prefieres, también puedes cobrar por Bizum o transferencia.">Cada mes, un rebut clar per família, amb les faltes, els bons i els desplaçaments ja calculats. Paguen en un toc i el rebut queda marcat com a pagat. Si ho prefereixes, també pots cobrar per Bizum o transferència.</p>
+          <ul><li class="ln"><i class="tick"></i><span data-es="Recordatorios de pago automáticos">Recordatoris de pagament automàtics</span></li><li class="ln"><i class="tick"></i><span data-es="Factura en PDF para cada familia">Factura en PDF per a cada família</span></li></ul>
+        </article>
+
+        <article class="st" data-i="6">
+          <span class="chip t-lav ln" data-es="Equipo">Equip</span>
+          <h2 class="split" data-es="Cada profesor ve lo suyo. La dirección lo ve todo.">Cada professor veu el que li toca. La direcció ho veu tot.</h2>
+          <p class="ln" data-es="Los tutores tienen su acceso, sus clases y sus alumnos. El dinero y la configuración solo los ve quien administra la academia.">Els tutors tenen el seu accés, les seves classes i els seus alumnes. Els diners i la configuració només els veu qui administra l'acadèmia.</p>
+          <ul><li class="ln"><i class="tick"></i><span data-es="Roles y permisos para cada miembro del equipo">Rols i permisos per a cada membre de l'equip</span></li><li class="ln"><i class="tick"></i><span data-es="Carga de trabajo por profesor, de un vistazo">Càrrega de feina per professor, d'un cop d'ull</span></li></ul>
+        </article>
+
+        <article class="st" data-i="7">
+          <span class="chip t-pre ln" data-es="A final de mes">A final de mes</span>
+          <h2 class="split" data-es="Cierra el mes con todo cobrado y las familias contentas.">Tanca el mes amb tot cobrat i les famílies contentes.</h2>
+          <p class="ln" data-es="Los recibos salen solos, las familias reciben el informe del trimestre y los intensivos se llenan avisando a todo el mundo de una vez. Tu equipo vuelve a tener tiempo para lo que importa: dar clase.">Els rebuts surten sols, les famílies reben l'informe del trimestre i els intensius s'omplen avisant tothom d'un sol cop. El teu equip torna a tenir temps per al que importa: fer classe.</p>
+          <div class="row ln"><a class="btn prim" href="/app?onboarding" data-es="Empieza ahora">Comença ara</a><button class="btn sec" data-demo="academy" data-es="Prueba la demo de academia">Prova la demo d'acadèmia</button></div>
+        </article>
+
+        <div class="pshadow" id="pshadow" aria-hidden="true"></div>
+        <div class="rig" id="rig" aria-hidden="true">
+          <div class="phone-box" id="pbox">
+            <div class="phone" id="phone">
+              <div class="edge" id="edge"></div><i class="p-btn l1"></i><i class="p-btn l2"></i><i class="p-btn l3"></i><i class="p-btn r"></i>
+              <div class="p-frame"><div class="p-bezel"><div class="p-screen" id="pscreen">
+                <i class="island"></i>
+                <div class="p-status"><span>17:12</span><span style="display:flex;gap:5px;align-items:center">
+                  <svg width="17" height="11" viewBox="0 0 17 11" fill="#14121f"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.7" y="5" width="3" height="6" rx="1"/><rect x="9.4" y="2.5" width="3" height="8.5" rx="1"/><rect x="14" y="0" width="3" height="11" rx="1"/></svg>
+                  <svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="#14121f" stroke-width="1.8" stroke-linecap="round"><path d="M1.5 4a9 9 0 0 1 13 0M4 6.6a5.4 5.4 0 0 1 8 0"/><circle cx="8" cy="9.4" r="1" fill="#14121f" stroke="none"/></svg>
+                  <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x=".6" y=".6" width="22" height="10.8" rx="3.4" stroke="#14121f" stroke-opacity=".45"/><rect x="2" y="2" width="15" height="8" rx="2" fill="#14121f"/><rect x="24" y="4" width="1.6" height="4" rx=".8" fill="#14121f" fill-opacity=".45"/></svg></span></div>
+                <div id="screens"></div>
+                <i class="home"></i><i class="tap" id="tap"></i><i class="glare"></i>
+              </div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dots" id="dots" aria-hidden="true"></div>
+        <div class="hint" id="hint" aria-hidden="true"><i></i><span data-es="Desliza para ver cómo funciona">Llisca per veure com funciona</span></div>
+      </div>
+    </section>
+
+    <!-- FES NÚMEROS: el visitant calcula el seu propi cost -->
+    <section class="calc" id="numeros">
+      <div class="wrap">
+        <div class="center rv"><span class="chip t-ros" data-es="Haz números">Fes números</span>
+          <h2 style="margin-top:16px" data-es="¿Cuánto te cuesta ahora mismo no tenerlo ordenado?">Quant et costa ara mateix no tenir-ho ordenat?</h2>
+          <p class="lead" style="margin-top:14px" data-es="Mueve los valores hasta que se parezcan a tu academia.">Mou els valors fins que s'assemblin a la teva acadèmia.</p></div>
+        <div class="box">
+          <div class="inputs rv">
+            <div class="ctl" data-k="T" style="--c:var(--lav);--ci:var(--lav-i)">
+              <div class="top"><span class="lab" data-es="Profesores">Professors</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vT">6</b><button type="button" data-d="1" aria-label="Més">+</button></div></div>
+              <input type="range" id="iT" min="1" max="40" value="6" aria-label="Professors"><div class="viz" id="zT"></div>
+            </div>
+            <div class="ctl" data-k="A" style="--c:var(--cel);--ci:var(--cel-i)">
+              <div class="top"><span class="lab" data-es="Alumnos">Alumnes</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vA">120</b><button type="button" data-d="1" aria-label="Més">+</button></div></div>
+              <input type="range" id="iA" min="5" max="800" step="5" value="120" aria-label="Alumnes"><div class="viz" id="zA"></div>
+            </div>
+            <div class="ctl" data-k="P" style="--c:var(--pre);--ci:var(--pre-i)">
+              <div class="top"><span class="lab" data-es="Precio medio por hora">Preu mitjà per hora</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vP">18 €</b><button type="button" data-d="1" aria-label="Més">+</button></div></div>
+              <input type="range" id="iP" min="8" max="45" value="18" aria-label="Preu per hora"><div class="viz" id="zP"></div>
+            </div>
+            <div class="assume2">
+              <div class="as" data-k="M"><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vM">15</b><button type="button" data-d="1" aria-label="Més">+</button></div><small data-es="minutos de mensajes por alumno y mes">minuts de missatges per alumne i mes</small></div>
+              <div class="as" data-k="C"><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vC">4</b><button type="button" data-d="1" aria-label="Més">+</button></div><small data-es="clases por alumno y mes">classes per alumne i mes</small></div>
+              <div class="as" data-k="L"><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vL">15 %</b><button type="button" data-d="1" aria-label="Més">+</button></div><small data-es="de las clases no se cobran">de les classes no es cobren</small></div>
+            </div>
+            <p class="note" data-es="Estimación orientativa: cambia cualquier valor para ajustarla a tu academia.">Estimació orientativa: canvia qualsevol valor per ajustar-la a la teva acadèmia.</p>
+          </div>
+          <div class="results rv">
+            <div class="res" style="background:var(--man)"><div class="n" id="oH">30 h</div><div class="l" data-es="de mensajes al mes en tu equipo">de missatges al mes al teu equip</div><div class="s" id="oH2">≈ 5 h per professor</div><div class="meter"><i id="mH"></i></div></div>
+            <div class="res" style="background:var(--ros)"><div class="n" id="oE">1.296 €</div><div class="l" data-es="que se escapan cada mes sin cobrar">que s'escapen cada mes sense cobrar</div><div class="s" id="oE2"></div><div class="meter"><i id="mE"></i></div></div>
+            <div class="res tot"><div class="l" data-es="En total, cada mes">En total, cada mes</div><div class="n" id="oV">1.836 €</div><div class="per" id="oV2"></div><div class="s" id="oV3"></div></div>
+            <a class="btn prim" href="/app?onboarding" style="justify-self:start" data-es="Recupéralo con Pauta">Recupera-ho amb Pauta</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COM COMENCES: pla en tres passos (redueix la por al canvi) -->
+    <section class="plan" id="comencar">
+      <div class="wrap">
+        <div class="center rv"><span class="chip t-cel" data-es="Empezar">Començar</span><h2 style="margin-top:16px" data-es="Tu academia, funcionando en una tarde">La teva acadèmia, funcionant en una tarda</h2></div>
+        <div class="steps">
+          <div class="step rv"><div class="num" style="background:var(--lav);color:var(--lav-i)">1</div><h3 data-es="Importa los alumnos">Importa els alumnes</h3><p data-es="Desde Excel o Google Sheets. Pauta comprueba los datos antes de importar y no duplica nada si lo repites.">Des d'Excel o Google Sheets. Pauta comprova les dades abans d'importar i no duplica res si ho repeteixes.</p></div>
+          <div class="step rv"><div class="num" style="background:var(--men);color:var(--men-i)">2</div><h3 data-es="Añade a tu equipo">Afegeix el teu equip</h3><p data-es="Cada profesor con su acceso, su color y sus clases. Tú decides quién ve los cobros.">Cada professor amb el seu accés, el seu color i les seves classes. Tu decideixes qui veu els cobraments.</p></div>
+          <div class="step rv"><div class="num" style="background:var(--pre);color:var(--pre-i)">3</div><h3 data-es="Invita a las familias">Convida les famílies</h3><p data-es="Un enlace y entran en 30 segundos, sin contraseñas. Desde ese momento, los cambios y los pagos ya pasan por Pauta.">Un enllaç i entren en 30 segons, sense contrasenyes. Des d'aquell moment, els canvis i els pagaments ja passen per Pauta.</p></div>
+        </div>
+        <div class="trust rv">
+          <span class="t-lav" data-es="Roles y permisos">Rols i permisos</span><span class="t-man" data-es="Consentimiento de datos de menores">Consentiment de dades de menors</span><span class="t-men" data-es="Copias de seguridad diarias">Còpies de seguretat diàries</span><span class="t-cel" data-es="Exportación de todos los datos">Exportació de totes les dades</span><span class="t-pre" data-es="Móvil y ordenador">Mòbil i ordinador</span><span class="t-ros" data-es="Catalán y castellano">Català i castellà</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAMBÉ PER A PROFESSORS PARTICULARS -->
+    <section class="solo" style="padding:0 0 clamp(64px, 9vw, 120px)">
+      <div class="wrap"><div class="box rv">
+        <div><span class="chip" style="background:#fff;color:var(--cel-i)" data-es="Profesores particulares">Professors particulars</span>
+          <h2 style="margin-top:16px;font-size:clamp(26px,3.2vw,38px)" data-es="¿Das clases por tu cuenta? También es para ti.">Fas classes pel teu compte? També és per a tu.</h2>
+          <p style="margin-top:12px;color:#3f4a5a" data-es="El mismo orden, a tu medida: tu agenda, tus familias y tus cobros, sin hojas de cálculo.">El mateix ordre, a la teva mida: la teva agenda, les teves famílies i els teus cobraments, sense fulls de càlcul.</p>
+          <div class="row" style="margin-top:22px"><a class="btn prim" href="/app?onboarding" data-es="Empieza como profesor">Comença com a professor</a><button class="btn sec" data-demo="solo" data-es="Mira la demo">Mira la demo</button></div></div>
+        <ul><li><i class="tick"></i><span data-es="Agenda, cambios de hora y faltas">Agenda, canvis d'hora i faltes</span></li><li><i class="tick"></i><span data-es="Recibo mensual o por clase, con tarjeta o Bizum">Rebut mensual o per classe, amb targeta o Bizum</span></li><li><i class="tick"></i><span data-es="Progreso e informes para las familias">Progrés i informes per a les famílies</span></li><li><i class="tick"></i><span data-es="Página pública para conseguir alumnos">Pàgina pública per aconseguir alumnes</span></li></ul>
+      </div></div>
+    </section>
+
+    <!-- PREGUNTES: objeccions abans de decidir -->
+    <section id="preguntes" style="padding-top:0">
+      <div class="wrap">
+        <div class="center rv"><span class="chip t-man" data-es="Preguntas">Preguntes</span><h2 style="margin-top:16px" data-es="Lo que nos suelen preguntar">El que ens solen preguntar</h2></div>
+        <div class="faq">
+          <details class="q rv"><summary data-es="¿Cómo pasamos los datos que ya tenemos?">Com passem les dades que ja tenim?</summary><p data-es="Exportas tu Excel o Google Sheets en CSV y lo importas. Pauta revisa cada fila antes de crear nada y puedes repetirlo sin duplicar alumnos.">Exportes el teu Excel o Google Sheets en CSV i l'importes. Pauta revisa cada fila abans de crear res i ho pots repetir sense duplicar alumnes.</p></details>
+          <details class="q rv"><summary data-es="¿Los profesores ven el dinero de la academia?">Els professors veuen els diners de l'acadèmia?</summary><p data-es="No. Cada tutor ve sus clases y sus alumnos. Los cobros, los recibos y la configuración solo los ve quien administra.">No. Cada tutor veu les seves classes i els seus alumnes. Els cobraments, els rebuts i la configuració només els veu qui administra.</p></details>
+          <details class="q rv"><summary data-es="¿Las familias tienen que instalar algo?">Les famílies han d'instal·lar alguna cosa?</summary><p data-es="No. Entran con un enlace, sin contraseñas, desde el navegador del móvil. Si quieren, la pueden instalar como una app.">No. Entren amb un enllaç, sense contrasenyes, des del navegador del mòbil. Si volen, la poden instal·lar com una app.</p></details>
+          <details class="q rv"><summary data-es="Nuestras familias pagan por Bizum. ¿Tenemos que cambiarlo?">Les nostres famílies paguen per Bizum. Ho hem de canviar?</summary><p data-es="No. Puedes seguir marcando los pagos que llegan por Bizum, transferencia o en efectivo. El pago con tarjeta es una opción más, que activas cuando quieras.">No. Pots seguir marcant els pagaments que arriben per Bizum, transferència o en efectiu. El pagament amb targeta és una opció més, que actives quan vulguis.</p></details>
+          <details class="q rv"><summary data-es="¿Y los datos de los menores?">I les dades dels menors?</summary><p data-es="Pauta registra el consentimiento del tutor legal, los datos son tuyos y los puedes exportar o eliminar cuando quieras. Los alumnos jóvenes entran en un modo sin dinero.">Pauta registra el consentiment del tutor legal, les dades són teves i les pots exportar o eliminar quan vulguis. Els alumnes joves entren en un mode sense diners.</p></details>
+          <details class="q rv"><summary data-es="¿Lo puedo probar antes de decidir?">Ho puc provar abans de decidir?</summary><p data-es="Sí. La demo de academia abre una academia de ejemplo con cuatro tutores y cientos de alumnos. La puedes ver como dirección, como tutor y como familia.">Sí. La demo d'acadèmia obre una acadèmia d'exemple amb quatre tutors i centenars d'alumnes. La pots veure com a direcció, com a tutor i com a família.</p></details>
+          <p class="rv" style="text-align:center;margin-top:22px"><a href="preguntes" style="font-weight:700;text-decoration:underline;text-underline-offset:4px" data-es="Ver todas las preguntas">Veure totes les preguntes</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="final" style="padding-top:0">
+      <div class="wrap"><div class="box rv">
+        <div id="logo-f" style="display:flex;justify-content:center;margin-bottom:18px"></div>
+        <h2 data-es="El mes que viene, ciérralo con todo cobrado.">El mes que ve, tanca'l amb tot cobrat.</h2>
+        <p class="lead" data-es="Tu equipo da clase. Pauta se encarga del resto.">El teu equip fa classe. Pauta s'encarrega de la resta.</p>
+        <div class="row"><a class="btn prim" href="/app?onboarding" data-es="Empieza ahora">Comença ara</a><button class="btn sec" data-demo="academy" data-es="Prueba la demo de academia">Prova la demo d'acadèmia</button></div>
+      </div></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="brand" style="font-size:18px"><span id="logo-ft"></span>Pauta</span>
+      <nav><a href="funcions" data-es="Funciones">Funcions</a><a href="academies" data-es="Academias">Acadèmies</a><a href="seguretat" data-es="Seguridad y datos">Seguretat i dades</a><a href="preguntes" data-es="Preguntas">Preguntes</a><a href="/familia" data-es="Acceso familias">Accés famílies</a><a href="/app" data-es="Entrar">Entra</a></nav>
+      <span>© Pauta</span>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const lang = () => (document.documentElement.lang === 'es' ? 'es' : 'ca');
+    const L = (ca, es) => (lang() === 'es' ? es : ca);
+    const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    const smooth = (t) => t * t * (3 - 2 * t);
+    const outC = (t) => 1 - Math.pow(1 - t, 3);
+    const nf = (n, d = 0) => new Intl.NumberFormat(lang() === 'es' ? 'es-ES' : 'ca-ES', { maximumFractionDigits: d, minimumFractionDigits: 0 }).format(n);
+
+    // ---------- Logo ----------
+    const SQ = ['5.5,0 2.75,4.76 7.51,7.51 10.26,2.75', '2.75,4.76 -2.75,4.76 -2.75,10.26 2.75,10.26', '-2.75,4.76 -5.5,0 -10.26,2.75 -7.51,7.51', '-5.5,0 -2.75,-4.76 -7.51,-7.51 -10.26,-2.75', '-2.75,-4.76 2.75,-4.76 2.75,-10.26 -2.75,-10.26', '2.75,-4.76 5.5,0 10.26,-2.75 7.51,-7.51'];
+    const TR = ['2.75,4.76 7.51,7.51 2.75,10.26', '-2.75,4.76 -2.75,10.26 -7.51,7.51', '-5.5,0 -10.26,2.75 -10.26,-2.75', '-2.75,-4.76 -7.51,-7.51 -2.75,-10.26', '2.75,-4.76 2.75,-10.26 7.51,-7.51', '5.5,0 10.26,-2.75 10.26,2.75'];
+    const HEX = '5.5,0 2.75,4.76 -2.75,4.76 -5.5,0 -2.75,-4.76 2.75,-4.76';
+    const logo = (n) => `<svg width="${n}" height="${n}" viewBox="-11.6 -11.6 23.2 23.2" role="img" aria-label="Pauta" style="display:block" stroke="#2A2540" stroke-width="0.4" stroke-linejoin="round">${SQ.map((p) => `<polygon points="${p}" fill="#DCEBFA"/>`).join('')}${TR.map((p) => `<polygon points="${p}" fill="#F9DFE4"/>`).join('')}<polygon points="${HEX}" fill="#FAF0C8"/></svg>`;
+    for (const [id, n] of [['logo-s', 30], ['logo-f', 64], ['logo-ft', 24]]) { const el = document.getElementById(id); if (el) el.innerHTML = logo(n); }
+
+    // ---------- Pantalles de l'app (dilluns 16 de novembre, 17:12) ----------
+    const IC = {
+      avui: '<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>', cal: '<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+      fam: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17.5" cy="9" r="2.5"/>', cob: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+      av: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>', card: '<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 11h18"/>', more: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+    };
+    const T_ADMIN = () => [['avui', L('Avui', 'Hoy')], ['cal', L('Calendari', 'Calendario')], ['fam', L('Famílies', 'Familias')], ['cob', L('Cobraments', 'Cobros')], ['av', L('Avisos', 'Avisos')]];
+    const T_TUTOR = () => [['avui', L('Avui', 'Hoy')], ['cal', L('Calendari', 'Calendario')], ['fam', L('Famílies', 'Familias')], ['av', L('Avisos', 'Avisos')]];
+    const T_FAM = () => [['cal', L('Calendari', 'Calendario')], ['card', L('Pagaments', 'Pagos')], ['more', L('Més', 'Más')], ['av', L('Avisos', 'Avisos')]];
+    const tabbar = (set, on) => `<div class="tabs">${set.map(([k, l], i) => `<div class="${i === on ? 'on' : ''}"><i><svg viewBox="0 0 24 24">${IC[k]}</svg></i>${l}</div>`).join('')}</div>`;
+    const av = (l, c) => `<div class="av" style="background:var(--${c});color:var(--${c}-i)">${l}</div>`;
+    const tutor = (n, k, c, d) => `<div class="it" style="margin-top:9px"><div class="g"><b>${n}</b><div class="bar" style="margin-top:5px"><i style="width:${k * 10}%;background:var(--${c}-i);--d:${d}"></i></div></div><b style="width:22px;text-align:right">${k}</b></div>`;
+    const msg = (who, txt, when, d) => `<div class="nt" style="--d:${d}"><div class="ap"><svg viewBox="0 0 24 24"><path d="M4 5h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg></div><div style="flex:1;min-width:0"><div style="display:flex"><b>${who}</b><em>${when}</em></div><span>${txt}</span></div></div>`;
+    const leak = (t, s, v, d) => `<div class="it a" style="--d:${d};padding:7px 0;border-bottom:1px solid rgba(42,37,64,.06)"><div class="g"><b>${t}</b><small>${s}</small></div><span class="pl ros">${v}</span></div>`;
+
+    const SCREENS = [
+      { id: 'dash', tabs: () => [T_ADMIN(), 0], html: () => `
+        <div class="a" style="--d:0"><div class="eb">Acadèmia Nord · ${L('dilluns 16 de novembre', 'lunes 16 de noviembre')}</div><h4>${L('Bona tarda, Marta', 'Buenas tardes, Marta')}</h4></div>
+        <div class="a" style="--d:.1;display:flex;gap:8px"><div class="cd" style="flex:1;background:var(--cel)"><div class="eb">${L('Classes avui', 'Clases hoy')}</div><div class="big">32</div></div><div class="cd" style="flex:1;background:var(--men)"><div class="eb">${L('Ja fetes', 'Ya hechas')}</div><div class="big"><span data-count="21">0</span></div></div><div class="cd" style="flex:1;background:var(--man)"><div class="eb">${L('Alumnes', 'Alumnos')}</div><div class="big">186</div></div></div>
+        <div class="cd a" style="--d:.22"><div class="eb">${L('Equip · classes d\'avui', 'Equipo · clases de hoy')}</div>${tutor('Ana Soler', 9, 'lav', .3)}${tutor('Bru Vidal', 8, 'pre', .4)}${tutor('Clara Mas', 8, 'ros', .5)}${tutor('Dani Font', 7, 'cel', .6)}</div>
+        <div class="cd it a" style="--d:.45;background:var(--pre)">${av('4', 'ros')}<div class="g"><b>${L('4 coses per decidir', '4 cosas por decidir')}</b><small>${L('2 canvis d\'hora, 1 classe extra i 1 pagament', '2 cambios de hora, 1 clase extra y 1 pago')}</small></div></div>` },
+      { id: 'lock', html: () => `<div class="lock"></div>
+        <div class="clock" style="position:relative;text-align:center;margin-top:6px"><span>${L('dilluns, 16 de novembre', 'lunes, 16 de noviembre')}</span><b style="display:block;font:300 62px/1.05 var(--sans);letter-spacing:-.03em;color:#1d1b29">17:12</b></div>
+        <div style="position:relative;display:grid;gap:7px;margin-top:4px">
+          ${msg(L('Mare de l\'Ona', 'Madre de Ona'), L('Dijous no podrem venir. La podem passar a divendres?', 'El jueves no podremos ir. ¿La pasamos al viernes?'), L('ara', 'ahora'), 0)}
+          ${msg(L('Pare d\'en Marc', 'Padre de Marc'), L('T\'he fet el Bizum. T\'ha arribat?', 'Te he hecho el Bizum. ¿Te ha llegado?'), '2 min', .35)}
+          ${msg('Júlia', L('Demà a quina hora era la classe?', '¿Mañana a qué hora era la clase?'), '5 min', .7)}
+          ${msg(L('Mare d\'en Nil', 'Madre de Nil'), L('Quant et devem d\'octubre?', '¿Cuánto te debemos de octubre?'), '9 min', 1.05)}
+          ${msg('Bru (' + L('professor', 'profesor') + ')', L('Qui cobra la classe que vaig canviar?', '¿Quién cobra la clase que cambié?'), '14 min', 1.4)}
+          <div class="nt" style="--d:1.75;justify-content:center"><span style="font-weight:800">${L('i 32 notificacions més', 'y 32 notificaciones más')}</span></div></div>` },
+      { id: 'leak', html: () => `
+        <div class="a" style="--d:0"><div class="eb">${L('Octubre, sense Pauta', 'Octubre, sin Pauta')}</div><h4>${L('El que no es va cobrar', 'Lo que no se cobró')}</h4></div>
+        <div class="cd" style="padding:4px 12px">
+          ${leak(L('Faltes sense avís', 'Faltas sin aviso'), L('4 × 9 €, ningú no les va apuntar', '4 × 9 €, nadie las apuntó'), '36 €', .2)}
+          ${leak(L('Classes canviades', 'Clases cambiadas'), L('3 × 18 €, no van arribar al rebut', '3 × 18 €, no llegaron al recibo'), '54 €', .4)}
+          ${leak(L('Classes extra', 'Clases extra'), L('2 × 20 €, sense facturar', '2 × 20 €, sin facturar'), '40 €', .6)}
+          ${leak(L('Desplaçaments', 'Desplazamientos'), L('6 × 5 €, oblidats', '6 × 5 €, olvidados'), '30 €', .8)}
+          ${leak(L('Rebuts de setembre', 'Recibos de septiembre'), L('2 famílies, sense reclamar', '2 familias, sin reclamar'), '54 €', 1)}</div>
+        <div class="cd late" style="--s:1.6;background:var(--ros)"><div class="eb" style="color:var(--ros-i)">${L('Perdut aquest mes', 'Perdido este mes')}</div><div class="big" style="font-size:34px;color:var(--ros-i)">−<span data-count="214">0</span> €</div><small style="font-size:10.5px;color:var(--ros-i)">${L('Exemple: acadèmia de 4 professors', 'Ejemplo: academia de 4 profesores')}</small></div>` },
+      { id: 'avisos', tabs: () => [T_ADMIN(), 4], html: () => `
+        <div class="a" style="--d:0"><div class="eb">${L('Per decidir', 'Por decidir')}</div><h4>${L('Avisos', 'Avisos')}</h4></div>
+        <div class="cd gone a" style="--d:.12;--s:2.6"><div class="it">${av('O', 'lav')}<div class="g"><b>${L('L\'Ona vol canviar la classe de dijous', 'Ona quiere cambiar la clase del jueves')}</b><small>${L('Dijous 19, 17:00 → divendres 20, 17:00 · hora lliure de la Clara', 'Jueves 19, 17:00 → viernes 20, 17:00 · hora libre de Clara')}</small></div></div>
+          <div style="display:flex;gap:8px;margin-top:10px"><div class="btnm ok press" style="flex:1;--p:1.9">${L('Accepta', 'Aceptar')}</div><div class="btnm no" style="flex:1">${L('Rebutja', 'Rechazar')}</div></div></div>
+        <div class="cd late" style="--s:3;background:var(--men)"><div class="it"><div class="g"><b style="color:var(--men-i)">${L('Acceptat', 'Aceptado')}</b><small style="color:var(--men-i)">${L('Agenda, professora i família actualitzades', 'Agenda, profesora y familia actualizadas')}</small></div><span class="pl men">${L('0 missatges', '0 mensajes')}</span></div></div>
+        <div class="cd a" style="--d:.3"><div class="it">${av('M', 'cel')}<div class="g"><b>${L('En Marc vol una classe extra', 'Marc quiere una clase extra')}</b><small>${L('Dimecres 18, 18:00 · abans de l\'examen', 'Miércoles 18, 18:00 · antes del examen')}</small></div></div></div>
+        <div class="cd a" style="--d:.45"><div class="it">${av('P', 'man')}<div class="g"><b>${L('La família Puig diu que ja ha pagat', 'La familia Puig dice que ya ha pagado')}</b><small>${L('Rebut d\'octubre · 72,00 €', 'Recibo de octubre · 72,00 €')}</small></div><span class="pl men">${L('Confirma', 'Confirmar')}</span></div></div>` },
+      { id: 'falta', tabs: () => [T_FAM(), 0], html: () => `
+        <div class="a" style="--d:0"><div class="eb">${L('Dijous 19 de novembre · 17:00', 'Jueves 19 de noviembre · 17:00')}</div><h4>${L('Química amb la Clara', 'Química con Clara')}</h4></div>
+        <div class="cd a" style="--d:.15"><div class="it">${av('J', 'ros')}<div class="g"><b>Júlia</b><small>${L('Classe d\'1 h · 18 €', 'Clase de 1 h · 18 €')}</small></div></div></div>
+        <div class="btnm dark press" style="--p:1.2">${L('Avisar que no venim', 'Avisar de que no vamos')}</div>
+        <div class="cd late" style="--s:1.6"><div class="eb">${L('Si aviseu ara', 'Si avisáis ahora')}</div><div class="it" style="margin-top:8px"><div class="g"><b>${L('Amb 3 dies d\'antelació', 'Con 3 días de antelación')}</b><small>${L('Més de 24 h abans de la classe', 'Más de 24 h antes de la clase')}</small></div><span class="pl men">${L('No es cobra', 'No se cobra')}</span></div></div>
+        <div class="cd late" style="--s:2.4;background:var(--men)"><div class="it"><div class="g"><b style="color:var(--men-i)">${L('Teniu una classe per recuperar', 'Tenéis una clase para recuperar')}</b><small style="color:var(--men-i)">${L('La podeu fer fins al 14 de gener', 'La podéis hacer hasta el 14 de enero')}</small></div><span class="pl men pulse">+1</span></div></div>
+        <div class="late" style="--s:3;font-size:10.5px;color:var(--a-ink2);text-align:center;padding:0 10px">${L('Amb menys de 24 h d\'antelació, l\'acadèmia cobra el 50 %.', 'Con menos de 24 h de antelación, la academia cobra el 50 %.')}</div>` },
+      { id: 'pay', tabs: () => [T_FAM(), 1], html: () => `
+        <div class="a" style="--d:0"><div class="eb">${L('Família Garcia', 'Familia García')}</div><h4>${L('Pagaments', 'Pagos')}</h4></div>
+        <div class="cd a" style="--d:.15"><div class="it"><div class="g"><b>${L('Rebut d\'octubre', 'Recibo de octubre')}</b><small>R2026-0011</small></div><b style="font:600 19px var(--serif)">91,00 €</b></div>
+          <div style="font-size:10.5px;color:var(--a-ink2);margin-top:8px;display:grid;gap:3px"><div style="display:flex;justify-content:space-between"><span>${L('Anglès · 4 h × 18 €', 'Inglés · 4 h × 18 €')}</span><span>72,00 €</span></div><div style="display:flex;justify-content:space-between"><span>${L('Falta sense avís · 50 %', 'Falta sin aviso · 50 %')}</span><span>9,00 €</span></div><div style="display:flex;justify-content:space-between"><span>${L('Desplaçament · 2 × 5 €', 'Desplazamiento · 2 × 5 €')}</span><span>10,00 €</span></div></div>
+          <div style="margin-top:10px"><span class="sw" style="--s:4.6;display:grid"><div class="btnm dark press f" style="--p:1.2;--s:4.6">${L('Paga amb targeta', 'Pagar con tarjeta')}</div><div class="btnm ok b">${L('Pagat', 'Pagado')}</div></span></div></div>
+        <div class="cd a" style="--d:.3"><div class="it"><div class="g"><b>${L('Rebut de setembre', 'Recibo de septiembre')}</b></div><span class="pl men">${L('Pagat', 'Pagado')}</span></div></div>
+        <div class="sheet" style="--s:1.8"><div style="width:36px;height:4px;border-radius:2px;background:#ddd;margin:0 auto 12px"></div>
+          <div class="eb">${L('Pagament segur', 'Pago seguro')}</div>
+          <div style="margin:8px 0;padding:13px;border-radius:14px;background:linear-gradient(135deg,var(--cel),var(--lav) 55%,var(--ros));color:var(--a-ink)"><div style="font-size:10px;opacity:.7">${L('Targeta', 'Tarjeta')}</div><div style="font:700 14px var(--sans);letter-spacing:.12em;margin-top:6px">•••• •••• •••• 4242</div></div>
+          <div style="position:relative;height:56px"><div class="sw" style="--s:3.2;position:absolute;inset:0;display:grid"><div class="btnm dark f" style="height:44px;margin-top:6px">${L('Paga 91,00 €', 'Pagar 91,00 €')}</div><div class="b" style="display:flex;align-items:center;justify-content:center;gap:10px"><span class="check"><svg viewBox="0 0 24 24" style="--s:3.2"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><b>${L('Pagat', 'Pagado')}</b></div></div></div></div>
+        <div class="toastm" style="--s:5.6">${L('Rebut pagat. L\'acadèmia ja ho sap.', 'Recibo pagado. La academia ya lo sabe.')}</div>` },
+      { id: 'tutor', tabs: () => [T_TUTOR(), 0], html: () => `
+        <div class="a" style="--d:0"><div class="eb">Clara Mas · ${L('professora', 'profesora')}</div><h4>${L('Les teves classes', 'Tus clases')}</h4></div>
+        <div class="a" style="--d:.1;display:flex;gap:6px;flex-wrap:wrap"><span class="pl lav">${L('Només veus les teves classes', 'Solo ves tus clases')}</span><span class="pl man">${L('Sense accés als cobraments', 'Sin acceso a los cobros')}</span></div>
+        <div class="cd it a" style="--d:.2">${av('J', 'ros')}<div class="g"><b>${L('Júlia · Química', 'Júlia · Química')}</b><small>16:00 · 1 h</small></div><span class="pl men">${L('Ha vingut', 'Ha venido')}</span></div>
+        <div class="cd it a" style="--d:.3">${av('P', 'pre')}<div class="g"><b>${L('Pol · Física', 'Pol · Física')}</b><small>17:00 · 1 h</small></div><span class="sw" style="--s:1.6"><span class="pl man f">${L('Ara', 'Ahora')}</span><span class="pl men b">${L('Ha vingut', 'Ha venido')}</span></span></div>
+        <div class="cd it a" style="--d:.4">${av('Q', 'cel')}<div class="g"><b>${L('Química 3r d\'ESO · grup', 'Química 3º de ESO · grupo')}</b><small>${L('18:00 · 4 alumnes', '18:00 · 4 alumnos')}</small></div><span class="pl lav">18:00</span></div>
+        <div class="cd it a" style="--d:.5">${av('A', 'men')}<div class="g"><b>${L('Arnau · Física', 'Arnau · Física')}</b><small>19:00 · 1 h</small></div><span class="pl lav">19:00</span></div>` },
+      { id: 'mes', tabs: () => [T_ADMIN(), 3], html: () => `
+        <div class="a" style="--d:0"><div class="eb">${L('Octubre', 'Octubre')}</div><h4>${L('Mes tancat', 'Mes cerrado')}</h4></div>
+        <div class="cd a" style="--d:.15;display:flex;align-items:center;gap:14px"><svg class="ring" width="86" height="86" viewBox="0 0 86 86"><circle class="bgc" cx="43" cy="43" r="34"/><circle class="fg" cx="43" cy="43" r="34"/></svg><div><div class="big" style="font-size:30px"><span data-count="98">0</span> %</div><small style="font-size:11px;color:var(--a-ink2)">${L('cobrat · 17.656 € de 18.016 €', 'cobrado · 17.656 € de 18.016 €')}</small></div></div>
+        <div class="a" style="--d:.35;display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="cd" style="background:var(--lav)"><div class="eb">${L('Informes enviats', 'Informes enviados')}</div><div class="big">186</div></div><div class="cd" style="background:var(--men)"><div class="eb">${L('Classes sense cobrar', 'Clases sin cobrar')}</div><div class="big">0</div></div></div>
+        <div class="cd a" style="--d:.5;background:var(--man)"><div class="it"><div class="g"><b>${L('Intensiu de Nadal', 'Intensivo de Navidad')}</b><small>${L('Totes les famílies avisades d\'un sol cop', 'Todas las familias avisadas de una vez')}</small></div><span class="pl men">${L('Complet · 12/12', 'Completo · 12/12')}</span></div></div>
+        <div class="cd a" style="--d:.65"><div class="it"><div class="g"><b>${L('Hores de missatges estalviades', 'Horas de mensajes ahorradas')}</b><small>${L('Els canvis ja no passen pel xat', 'Los cambios ya no pasan por el chat')}</small></div><span class="pl lav">${L('Tot l\'equip', 'Todo el equipo')}</span></div></div>` },
+    ];
+    const N = SCREENS.length;
+    const screensEl = $('#screens'), tapEl = $('#tap');
+    let activeScreen = -1, countTimers = [];
+    function renderScreens() {
+      screensEl.innerHTML = SCREENS.map((s) => { const t = s.tabs ? s.tabs() : null; return `<div class="scr" data-id="${s.id}" data-tab="${t ? (t[1] + 0.5) / t[0].length : ''}">${s.html()}${t ? tabbar(t[0], t[1]) : ''}</div>`; }).join('');
+      if (activeScreen >= 0) { const s = screensEl.children[activeScreen]; s.classList.add('on'); runCounters(s); }
+    }
+    function runCounters(scr) {
+      countTimers.forEach(clearTimeout); countTimers = [];
+      scr.querySelectorAll('[data-count]').forEach((el) => {
+        const to = +el.dataset.count; el.textContent = '0';
+        countTimers.push(setTimeout(() => { const t0 = performance.now(); const tick = (t) => { const k = Math.min(1, (t - t0) / 1200); el.textContent = nf(Math.round(to * outC(k))); if (k < 1 && scr.classList.contains('on')) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, scr.dataset.id === 'leak' ? 1900 : 600));
+      });
+    }
+    function showScreen(i) {
+      if (i === activeScreen) return;
+      const prev = screensEl.children[activeScreen], next = screensEl.children[i];
+      if (prev) { prev.classList.remove('on'); prev.classList.add('leaving'); setTimeout(() => prev.classList.remove('leaving'), 520); }
+      next.classList.remove('leaving'); void next.offsetWidth; next.classList.add('on'); runCounters(next);
+      if (next.dataset.tab && activeScreen !== -1 && !RM) { tapEl.style.left = `${+next.dataset.tab * 100}%`; tapEl.style.top = `${$('#pscreen').offsetHeight - 50}px`; tapEl.classList.remove('go'); void tapEl.offsetWidth; tapEl.classList.add('go'); }
+      activeScreen = i;
+    }
+
+    // ---------- Textos: cada peça (línia o paraula del títol) entra i surt lligada a l'scroll ----------
+    const steps = $$('.st');
+    function splitTitles() {
+      steps.forEach((st) => {
+        const h = st.querySelector('.split'); if (!h) return;
+        let lastW = null;
+        const walk = (node) => {
+          [...node.childNodes].forEach((c) => {
+            if (c.nodeType === 3) {
+              const frag = document.createDocumentFragment();
+              c.textContent.split(/(\s+)/).forEach((w, j) => { if (!w) return; if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); lastW = null; } else if (j === 0 && lastW && /^[,.;:!?»)…]+$/.test(w)) { lastW.textContent += w; } else { const m = document.createElement('span'); m.className = 'wm'; const s = document.createElement('span'); s.className = 'w'; s.textContent = w; m.appendChild(s); frag.appendChild(m); lastW = s; } });
+              c.replaceWith(frag);
+            } else if (c.nodeType === 1 && !c.classList.contains('wm')) walk(c);
+          });
+        };
+        walk(h);
+      });
+      steps.forEach((st) => {
+        let k = 0; const pieces = [];
+        [...st.querySelectorAll('.ln, .w')].forEach((el) => { pieces.push({ el, k, word: el.classList.contains('w') }); k += el.classList.contains('w') ? 0.28 : 1; });
+        st._pieces = pieces; st._kmax = Math.max(1, k); st._vis = -1;
+      });
+    }
+
+    // ---------- Disposició i mides ----------
+    const tour = $('#tour'), stage = $('#stage'), rig = $('#rig'), pbox = $('#pbox'), phone = $('#phone'), pshadow = $('#pshadow'), tint = $('#tint'), dotsEl = $('#dots'), hint = $('#hint');
+    // Coreografia: cada pas té la seva postura. No va sempre d'un costat a l'altre: de vegades cau enrere,
+    // s'acosta, gira sobre si mateix ensenyant el dors o es gira per mostrar el gruix.
+    const POSES = [
+      { x: 1, y: 0, z: 0, rx: 6, ry: -16, rz: 0 },                    // presentació
+      { x: -1, y: -10, z: 20, rx: 4, ry: 14, rz: -5 },                // allau de missatges
+      { x: -0.9, y: 34, z: -120, rx: 32, ry: 8, rz: 4 },              // els diners s'escapen: cau enrere
+      { x: 1, y: -14, z: 70, rx: -6, ry: -20, rz: 3 },               // amb Pauta: creua i s'inclina cap a tu
+      { x: 0.92, y: -6, z: 110, rx: 0, ry: -4, rz: 0 },               // faltes: s'acosta per llegir-ho bé
+      { x: -1, y: 0, z: 0, rx: 6, ry: 16, rz: 4 },                    // cobraments
+      { x: -0.82, y: 12, z: -40, rx: 10, ry: 30, rz: -2 },            // equip: es gira i es veu el gruix
+      { x: 1, y: -4, z: 40, rx: 4, ry: -10, rz: 0 },                  // final de mes
+    ];
+    steps.forEach((st, i) => st.classList.add(POSES[i].x > 0 ? 'l' : 'r'));
+    dotsEl.innerHTML = steps.map(() => '<i></i>').join('');
+    let vw = innerWidth, vh = innerHeight, sh = innerHeight, mobile = vw <= 900, ps = 1, tourTop = 0, scrollLen = 1;
+    const STEP_VH = 1.15;
+    function measure() {
+      vw = document.documentElement.clientWidth || innerWidth; vh = innerHeight; sh = stage.clientHeight || vh; mobile = vw <= 900;
+      tour.style.height = `${((steps.length - 1) * STEP_VH + 1) * 100}vh`;
+      tourTop = tour.getBoundingClientRect().top + scrollY; scrollLen = Math.max(1, tour.offsetHeight - vh);
+      const avail = mobile ? (vh - 64) * 0.4 : vh - 64 - 70;
+      ps = clamp(avail / 676, 0.42, 1);
+      phone.style.transform = `scale(${ps})`; pbox.style.width = `${332 * ps}px`; pbox.style.height = `${676 * ps}px`;
+      rig.style.marginLeft = `${-166 * ps}px`; buildEdge(); stage.style.setProperty('--phh', `${Math.round(676 * ps)}px`);
+      cacheRv();
+    }
+
+    // gruix real del telèfon (uns 8 mm sobre 71 mm d'ample), en píxels de pantalla
+    function buildEdge() {
+      const depth = 36 * ps, n = 18, edge = document.getElementById('edge');
+      edge.innerHTML = Array.from({ length: n + 1 }, (_, k) => `<i class="${k === n ? 'back' : ''}" style="--z:${((k + 1) * depth / (n + 1)).toFixed(2)}">${k === n ? `<span class="glass"></span><span class="plat"><b class="lens" style="right:26px;top:22px"></b><b class="lens" style="right:26px;top:114px"></b><b class="lens" style="right:108px;top:68px"></b><b class="dot" style="left:46px;top:40px;width:26px;height:26px;background:radial-gradient(circle,#fff7e0,#e9dfc4 60%,#b9b39f)"></b><b class="dot" style="left:48px;top:132px;width:22px;height:22px;background:radial-gradient(circle at 45% 45%,#3a3f50,#11141d 70%)"></b><b class="dot" style="left:116px;top:100px;width:8px;height:8px;background:#9a9da4"></b></span><span class="logo">${logo(64)}</span>` : ''}</i>`).join('');
+      phone.style.setProperty('--pd', `${depth}px`);
+    }
+
+    // ---------- Colors de fons: els sis pastels de l'app, un per pas ----------
+    const PAST = ['#F1EEFC', '#FDF0E6', '#FCEEF1', '#EDF4FC', '#FDF8E4', '#EAF7F1', '#F1EEFC', '#FDF0E6'];
+    const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+    const PRGB = PAST.map(hex);
+
+    // ---------- Seccions següents: entrada lligada a l'scroll ----------
+    let rvs = [];
+    function cacheRv() { rvs = $$('.rv').map((el) => { const prev = el.style.transform; el.style.transform = 'none'; const top = el.getBoundingClientRect().top + scrollY; el.style.transform = prev; return { el, top, last: -1 }; }); }
+
+    // ---------- Calculadora: controls visuals, valors amb inèrcia ----------
+    const V = { T: 6, A: 120, P: 18, M: 15, C: 4, L: 15 };
+    const LIM = { T: [1, 40, 1], A: [5, 800, 5], P: [8, 45, 1], M: [0, 120, 5], C: [1, 20, 1], L: [0, 50, 1] };
+    const RANGE = { T: $('#iT'), A: $('#iA'), P: $('#iP') };
+    const calc = { h: 0, e: 0, th: 0, te: 0 };
+    const INKS = ['var(--lav-i)', 'var(--men-i)', 'var(--pre-i)', 'var(--cel-i)', 'var(--ros-i)', 'var(--man-i)'];
+    function recompute() {
+      calc.th = V.A * V.M / 60; calc.te = V.A * V.C * (V.L / 100) * V.P;
+      $('#vT').textContent = V.T; $('#vA').textContent = nf(V.A); $('#vP').textContent = `${V.P} €`;
+      $('#vM').textContent = V.M; $('#vC').textContent = V.C; $('#vL').textContent = `${V.L} %`;
+      for (const k of ['T', 'A', 'P']) { const r = RANGE[k]; r.value = V[k]; r.style.setProperty('--p', `${(V[k] - r.min) / (r.max - r.min) * 100}%`); }
+      const tShow = Math.min(V.T, 18);
+      $('#zT').innerHTML = Array.from({ length: tShow }, (_, i) => `<span class="pp" style="color:${INKS[i % 6]}"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><circle cx="12" cy="8" r="4.2"/><path d="M3.8 21c.7-4.6 4-7.2 8.2-7.2s7.5 2.6 8.2 7.2z"/></svg></span>`).join('') + (V.T > tShow ? `<span class="more">+${V.T - tShow}</span>` : '');
+      const aShow = Math.ceil(V.A / 5);
+      $('#zA').innerHTML = Array.from({ length: Math.min(aShow, 100) }, () => '<span class="dt"></span>').join('') + (aShow > 100 ? `<span class="more">+${nf((aShow - 100) * 5)}</span>` : '') + `<span class="more" style="width:100%;margin:6px 0 0;font-weight:600;color:#6a6773">${L('cada punt són 5 alumnes', 'cada punto son 5 alumnos')}</span>`;
+      $('#zP').innerHTML = `<span class="hint">${L('Una família amb', 'Una familia con')} ${V.C} ${L('classes al mes paga', 'clases al mes paga')} <b>${nf(V.P * V.C)} €</b></span>`;
+    }
+    for (const k of Object.keys(RANGE)) RANGE[k].addEventListener('input', (e) => { V[k] = +e.target.value; recompute(); });
+    $$('.ctl, .as').forEach((box) => box.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-d]'); if (!b) return;
+      const k = box.dataset.k, [mn, mx, st] = LIM[k]; V[k] = Math.min(mx, Math.max(mn, V[k] + st * +b.dataset.d)); recompute();
+    }));
+    function drawCalc() {
+      calc.h += (calc.th - calc.h) * (RM ? 1 : 0.14); calc.e += (calc.te - calc.e) * (RM ? 1 : 0.14);
+      $('#oH').textContent = `${nf(calc.h)} h`; $('#oH2').textContent = L(`≈ ${nf(calc.h / V.T, 1)} h per professor`, `≈ ${nf(calc.h / V.T, 1)} h por profesor`);
+      $('#oE').textContent = `${nf(calc.e)} €`; $('#oE2').textContent = L(`${nf(calc.e * 10)} € en un curs de 10 mesos`, `${nf(calc.e * 10)} € en un curso de 10 meses`);
+      // temps valorat al preu d'una hora de classe: són hores que podries dedicar a fer classe
+      const tot = calc.h * V.P + calc.e;
+      $('#oH2').textContent += L(` · fent classe serien ${nf(calc.h * V.P)} €`, ` · dando clase serían ${nf(calc.h * V.P)} €`);
+      $('#oV').textContent = `${nf(tot)} €`;
+      $('#oV2').innerHTML = L(`<b>${nf(tot / V.A, 1)} €</b> per alumne`, `<b>${nf(tot / V.A, 1)} €</b> por alumno`);
+      $('#oV3').textContent = L(`Temps i cobraments recuperats. En un curs de 10 mesos, ${nf(tot * 10)} €.`, `Tiempo y cobros recuperados. En un curso de 10 meses, ${nf(tot * 10)} €.`);
+      $('#mH').style.width = `${Math.min(100, calc.h / 4)}%`; $('#mE').style.width = `${Math.min(100, calc.e / 50)}%`;
+    }
+
+    // ---------- Bucle: scroll amb inèrcia per a tot ----------
+    let sy = scrollY, t0 = performance.now();
+    function plateau(raw) { const i = Math.floor(raw), f = raw - i; return i + (f < 0.2 ? 0 : f > 0.8 ? 1 : smooth((f - 0.2) / 0.6)); }
+    function frame(now) {
+      const y = scrollY;
+      sy += (y - sy) * (RM ? 1 : 0.075); if (Math.abs(y - sy) < 0.1) sy = y;
+      const raw = clamp((sy - tourTop) / scrollLen) * (steps.length - 1);
+      const s = RM ? Math.round(raw) : plateau(raw);
+      const intro = RM ? 1 : clamp((now - t0 - 150) / 1400);
+
+      // textos
+      steps.forEach((st, i) => {
+        const u = s - i;
+        if (Math.abs(u) >= 1) { if (st._vis !== 0) { st.style.visibility = 'hidden'; st._vis = 0; } return; }
+        st.style.visibility = 'visible'; st._vis = 1;
+        st.style.pointerEvents = Math.abs(u) < 0.35 ? 'auto' : 'none';
+        const c = 0.25 / st._kmax;
+        for (const p of st._pieces) {
+          let v = u <= 0 ? clamp((u - (-0.45 + p.k * c)) / 0.2) : 1 - clamp((u - 0.04 - p.k * c * 0.3) / 0.26);
+          if (i === 0) v = Math.min(v, clamp((now - t0 - 200 - p.k * 110) / 700));
+          const e = outC(v);
+          if (p.word) p.el.style.transform = `translate3d(0, ${(1 - e) * 108}%, 0) rotate(${(1 - e) * 5}deg)`;
+          else p.el.style.transform = `translate3d(0, ${(1 - e) * (u > 0 ? -34 : 44)}px, 0)`;
+          p.el.style.opacity = e.toFixed(3);
+          if (!p.word && !mobile && !RM) p.el.style.filter = e > 0.99 ? 'none' : `blur(${((1 - e) * 6).toFixed(2)}px)`;
+        }
+      });
+
+      // mòbil: interpola entre postures; quan canvia de costat fa un arc, i al pas marcat fa una volta sencera
+      const i = Math.min(steps.length - 2, Math.floor(s)), f = clamp(s - i), e = smooth(f);
+      const A = POSES[i], B = POSES[i + 1], lp = (k) => A[k] + (B[k] - A[k]) * e;
+      const cross = clamp(Math.abs(B.x - A.x) / 1.2), arc = Math.sin(Math.PI * e) * cross, dir = Math.sign(B.x - A.x) || 1;
+      const X = mobile ? vw * 0.07 : Math.min(vw * 0.235, 330), m = mobile ? 0.55 : 1;
+      const time = now / 1000;
+      let x = lp('x') * X;
+      let yv = (lp('y') - arc * 38) * m + (RM ? 0 : Math.sin(time * 1.1) * 6);
+      let z = (lp('z') + arc * 120) * m;
+      let ry = (lp('ry') + arc * 24 * dir) * m + (RM ? 0 : Math.sin(time * 0.7) * 2.2);
+      let rx = (lp('rx') + arc * 8) * m + (RM ? 0 : Math.sin(time * 0.9) * 1.4);
+      let rz = (lp('rz') - arc * 6 * dir) * m;
+      const ph = 676 * ps, cy = mobile ? 64 + ph / 2 + 10 : 64 + (vh - 64) / 2;
+      // Encaix: amb la perspectiva i els girs, el mòbil no pot sortir mai de la pantalla (ni tapar el text a sota, en mòbil)
+      let sfix = 1;
+      {
+        const P = 1600, oy = sh * 0.45, pw = 332 * ps, d = Math.PI / 180, S = Math.sin, C = Math.cos, ab = Math.abs;
+        const near = (pw / 2) * ab(S(ry * d)) + (ph / 2) * ab(S(rx * d)) + 36 * ps;
+        const kN = P / Math.max(400, P - z - near), k0 = P / Math.max(400, P - z);
+        const hw = kN * ((pw / 2) * ab(C(ry * d)) + (ph / 2) * ab(S(rz * d)) + 18 * ps * ab(S(ry * d))) + 4;
+        const hh = kN * ((ph / 2) * ab(C(rx * d)) + (pw / 2) * ab(S(rz * d))) + 4;
+        const L0 = 10, R0 = vw - (mobile ? 10 : 34), T0 = 72, B0 = mobile ? 64 + ph + 34 : sh - 12;
+        sfix = Math.min(1, (R0 - L0) / (2 * hw), (B0 - T0) / (2 * hh));
+        const w2 = hw * sfix, h2 = hh * sfix;
+        const cxp = clamp(vw / 2 + x * k0, L0 + w2, R0 - w2), cyp = clamp(oy + (cy + yv - oy) * k0, T0 + h2, B0 - h2);
+        x = (cxp - vw / 2) / k0; yv = (cyp - oy) / k0 + oy - cy;
+      }
+      if (!RM) { const k = outC(intro); yv += (1 - k) * 260; ry += (1 - k) * -38; rx += (1 - k) * 22; z += (1 - k) * -200; rig.style.opacity = k.toFixed(3); }
+      rig.style.transform = `translate3d(${x.toFixed(1)}px, ${(cy - ph / 2 + yv).toFixed(1)}px, ${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg) scale3d(${sfix.toFixed(4)}, ${sfix.toFixed(4)}, ${sfix.toFixed(4)})`;
+      pshadow.style.transform = `translate3d(${x.toFixed(1)}px, ${(cy + ph / 2 + 4).toFixed(1)}px, 0) scale(${(ps * sfix * (1 - arc * 0.35) * (1 + z / 900)).toFixed(3)}, ${(ps * sfix * (1 - arc * 0.35) * (1 + z / 900)).toFixed(3)})`;
+      pshadow.style.opacity = ((0.9 - arc * 0.55) * (RM ? 1 : outC(intro))).toFixed(3);
+      showScreen(Math.min(N - 1, f < 0.5 ? i : i + 1));
+
+      // fons
+      const a = PRGB[Math.min(PRGB.length - 1, Math.floor(s))], b = PRGB[Math.min(PRGB.length - 1, Math.floor(s) + 1)], ff = s - Math.floor(s);
+      tint.style.background = `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * ff)).join(',')})`;
+      const cur = Math.round(s); [...dotsEl.children].forEach((d, k) => d.classList.toggle('on', k === cur));
+      hint.style.opacity = s > 0.15 ? 0 : outC(clamp((now - t0 - 1600) / 600));
+
+      // seccions de sota
+      for (const r of rvs) {
+        const top = r.top - sy; if (top > vh * 1.2 || top < -vh * 2) continue;
+        const q = RM ? 1 : outC(clamp((vh * 0.94 - top) / (vh * 0.3)));
+        if (Math.abs(q - r.last) < 0.002) continue; r.last = q;
+        r.el.style.opacity = q.toFixed(3); r.el.style.transform = q >= 0.999 ? 'none' : `translate3d(0, ${((1 - q) * 64).toFixed(1)}px, 0) scale(${(0.97 + 0.03 * q).toFixed(4)})`;
+      }
+      drawCalc();
+      requestAnimationFrame(frame);
+    }
+
+    // ---------- Idioma ----------
+    const nodes = $$('[data-es]'); nodes.forEach((el) => { el.dataset.ca = el.innerHTML; });
+    const meta = { ca: [document.title, $('meta[name=description]').content], es: ['Pauta · El software que pone orden en tu academia', 'Pauta organiza horarios, cambios de hora, faltas y cobros de todos los profesores y familias de tu academia. Menos mensajes, ninguna clase sin cobrar y pago con tarjeta.'] };
+    function setLang(l) {
+      document.documentElement.lang = l;
+      nodes.forEach((el) => { el.innerHTML = l === 'es' ? el.dataset.es : el.dataset.ca; });
+      document.title = meta[l][0]; $('meta[name=description]').content = meta[l][1];
+      $$('.lang button').forEach((b) => { const on = b.dataset.l === l; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+      splitTitles(); renderScreens(); recompute();
+    }
+    $$('.lang button').forEach((b) => b.addEventListener('click', () => { try { localStorage.setItem('pauta.lang', b.dataset.l); } catch { /* sense emmagatzematge */ } setLang(b.dataset.l); }));
+
+    // ---------- Demos ----------
+    $$('[data-demo]').forEach((btn) => btn.addEventListener('click', async () => {
+      if (btn.disabled) return;
+      const academy = btn.dataset.demo === 'academy', txt = btn.innerHTML;
+      btn.disabled = true; btn.style.opacity = '.7'; btn.textContent = academy ? L('Preparant l\'acadèmia…', 'Preparando la academia…') : L('Preparant la demo…', 'Preparando la demo…');
+      try {
+        const r = await fetch(academy ? '/api/demo/academy' : '/api/demo/start', { method: 'POST', credentials: 'same-origin' });
+        if (!r.ok) throw new Error();
+        try { localStorage.setItem('pauta.photo', 'later'); } catch { /* idem */ }
+        location.assign('/app');                                    // directe a l'app (mai torna a la landing)
+      } catch { btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = txt; alert(L('No s\'ha pogut obrir la demo. Torna-ho a provar.', 'No se ha podido abrir la demo. Vuelve a intentarlo.')); }
+    }));
+
+    // ---------- Arrencada ----------
+    let saved = null; try { saved = localStorage.getItem('pauta.lang'); } catch { /* idem */ }
+    if (saved === 'es') setLang('es'); else { splitTitles(); renderScreens(); recompute(); }
+    measure(); addEventListener('resize', measure);
+    if (document.fonts?.ready) document.fonts.ready.then(measure);
+    addEventListener('load', measure);
+    requestAnimationFrame(frame);
+    if (location.search.includes('debug')) window.__frame = frame;   // per provar-ho amb la pestanya en segon pla
+  })();
+  </script>
+</body>
+</html>
