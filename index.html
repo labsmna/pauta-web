@@ -73,7 +73,7 @@
     .st .micro span { display: inline-flex; align-items: center; gap: 8px; } .st .micro .tick { width: 16px; height: 16px; margin: 0; } .st .micro .tick::after { left: 5.5px; top: 3px; width: 4px; height: 7px; border-width: 0 2px 2px 0; }
     h1, h2, h3, p, li, small, .l, .s { text-wrap: pretty; }
     .ln, .w { will-change: transform, opacity; }
-    .wm { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .02em .08em; margin-bottom: -.08em; } .w { display: inline-block; transform-origin: 0 100%; }
+    .wm { display: inline-block; vertical-align: top; } .w { display: inline-block; transform-origin: 0 100%; }
     .rig { position: absolute; z-index: 2; left: 50%; top: 0; transform-style: preserve-3d; will-change: transform; }
     .pshadow { position: absolute; z-index: 1; left: 50%; top: 0; width: 260px; height: 46px; margin-left: -130px; border-radius: 50%; background: radial-gradient(closest-side, rgba(36,34,42,.32), rgba(36,34,42,0)); filter: blur(6px); will-change: transform, opacity; }
     .dots { position: absolute; z-index: 4; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
@@ -661,7 +661,7 @@
           let v = u <= 0 ? clamp((u - (-0.45 + p.k * c)) / 0.2) : 1 - clamp((u - 0.04 - p.k * c * 0.3) / 0.26);
           if (i === 0) v = Math.min(v, clamp((now - t0 - 200 - p.k * 110) / 700));
           const e = outC(v);
-          if (p.word) p.el.style.transform = `translate3d(0, ${(1 - e) * 108}%, 0) rotate(${(1 - e) * 5}deg)`;
+          if (p.word) p.el.style.transform = `translate3d(0, ${((1 - e) * (u > 0 ? -0.3 : 0.45)).toFixed(3)}em, 0)`;
           else p.el.style.transform = `translate3d(0, ${(1 - e) * (u > 0 ? -34 : 44)}px, 0)`;
           p.el.style.opacity = e.toFixed(3);
           if (!p.word && !mobile && !RM) p.el.style.filter = e > 0.99 ? 'none' : `blur(${((1 - e) * 6).toFixed(2)}px)`;

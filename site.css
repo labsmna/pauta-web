@@ -1,7 +1,7 @@
 /* Pàgines del web (funcions, acadèmies, seguretat, preguntes): el mateix llenguatge visual que la landing. */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap');
 :root {
-  --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #66636E; --line: #ECE8E1;
+  --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #57545F; --line: #ECE8E1;
   --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #1E6A50;
   --cel: #DCEBFA; --cel-i: #21568C; --pre: #FCE6D6; --pre-i: #8A4520; --ros: #F9DFE4; --ros-i: #8E3148;
   --serif: Fraunces, Georgia, serif; --sans: Manrope, system-ui, sans-serif; --ease: cubic-bezier(.2,.8,.2,1);
@@ -63,25 +63,54 @@ footer.foot nav { display: grid; gap: 8px; } footer.foot a:hover { color: var(--
 .phero { padding: clamp(48px, 7vw, 96px) 0 clamp(24px, 4vw, 48px); }
 .phero h1 { margin: 16px 0 18px; max-width: 900px; } .phero .row { margin-top: 28px; }
 
-/* blocs reutilitzables */
-.card { background: var(--paper); border-radius: 24px; padding: 26px; box-shadow: var(--shadow); }
-.group { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.6fr); gap: clamp(24px, 4vw, 64px); padding: clamp(36px, 5vw, 56px) 0; border-top: 1px solid var(--line); }
-.group:first-child { border-top: 0; }
-.group .side { position: sticky; top: 96px; align-self: start; }
-.group .side h2 { font-size: clamp(26px, 3vw, 36px); margin: 14px 0 12px; } .group .side p { color: var(--ink2); }
-.feats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.feat { background: var(--paper); border-radius: 20px; padding: 20px 20px 20px 22px; box-shadow: var(--shadow); position: relative; overflow: hidden; }
-.feat::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--c, var(--lav)); }
-.feat b { display: block; font-size: 16px; margin-bottom: 4px; } .feat span { color: var(--ink2); font-size: 15px; line-height: 1.5; }
-@media (max-width: 860px) { .group { grid-template-columns: 1fr; } .group .side { position: static; } .feats { grid-template-columns: 1fr; } }
-.three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.tile { border-radius: 26px; padding: 28px; } .tile h3 { font-size: 22px; margin: 6px 0 10px; } .tile p { color: #4f4c58; font-size: 15.5px; }
-@media (max-width: 860px) { .three { grid-template-columns: 1fr; } }
-.roles { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); font-size: 15px; }
-.roles th, .roles td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); } .roles tr:last-child td { border-bottom: 0; }
-.roles th { font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); background: #fdfcfa; }
-.roles td.y { color: var(--men-i); font-weight: 700; } .roles td.n { color: #a19dab; }
-.tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 22px; }
+/* ===== Capítols: un sol bloc de color per tema, amb una idea principal i la resta en llista neta ===== */
+.chap { --c: var(--lav); --ci: var(--lav-i); background: var(--c); border-radius: 40px; padding: clamp(30px, 5.5vw, 72px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: clamp(28px, 5vw, 80px); margin-bottom: clamp(14px, 2vw, 22px); }
+.chap .head { align-self: start; position: sticky; top: 100px; }
+.chap .num { display: block; font: 600 clamp(54px, 7vw, 92px)/.85 var(--serif); font-variation-settings: 'SOFT' 100; letter-spacing: -.04em; color: var(--ci); }
+.chap .kick { display: block; margin: 20px 0 12px; font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ci); }
+.chap h2 { font-size: clamp(32px, 4vw, 50px); line-height: 1.04; }
+.chap .head p { margin-top: 16px; font-size: clamp(17px, 1.5vw, 19px); line-height: 1.55; color: rgba(36,34,42,.8); max-width: 440px; }
+.chap .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 3vw, 38px) clamp(20px, 3vw, 44px); align-content: start; }
+.chap .it b { display: block; font-size: 18px; font-weight: 800; line-height: 1.3; margin-bottom: 6px; color: var(--ink); }
+.chap .it p { font-size: 15.5px; line-height: 1.55; color: rgba(36,34,42,.76); }
+.chap .it.key { grid-column: 1 / -1; background: rgba(255,255,255,.74); border-radius: 28px; padding: clamp(22px, 3vw, 34px); }
+.chap .it.key b { font: 600 clamp(24px, 2.5vw, 32px)/1.12 var(--serif); font-variation-settings: 'SOFT' 100; letter-spacing: -.02em; margin-bottom: 10px; }
+.chap .it.key p { font-size: 17px; color: rgba(36,34,42,.82); max-width: 560px; }
+.chap.flip { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); } .chap.flip .head { order: 2; }
+.chap.dark { background: #24222A; color: #fff; } .chap.dark h2, .chap.dark .it b { color: #fff; }
+.chap.dark .head p, .chap.dark .it p { color: rgba(255,255,255,.74); } .chap.dark .num, .chap.dark .kick { color: var(--c); }
+.chap.dark .it.key { background: rgba(255,255,255,.09); } .chap.dark .it.key p { color: rgba(255,255,255,.82); }
+.chap.open { background: transparent; padding-inline: 0; border-radius: 0; } .chap.open .it.key { background: var(--c); }
+@media (max-width: 860px) {
+  .chap, .chap.flip { grid-template-columns: 1fr; border-radius: 30px; } .chap.open { padding-inline: 0; }
+  .chap .head { position: static; } .chap.flip .head { order: 0; } .chap .list { grid-template-columns: 1fr; }
+}
+/* llista gran: tres idees amb el mateix pes */
+.chap .list.big { grid-template-columns: 1fr; gap: 0; }
+.chap .list.big { gap: clamp(26px, 3.4vw, 40px); }
+.chap .list.big .it b { font: 600 clamp(22px, 2.3vw, 28px)/1.15 var(--serif); font-variation-settings: 'SOFT' 100; letter-spacing: -.015em; margin-bottom: 8px; }
+/* edats (menors) */
+.ages { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.age { border-radius: 28px; padding: clamp(22px, 3vw, 32px); background: rgba(255,255,255,.78); }
+.age.no { background: rgba(255,255,255,.38); }
+.age .big { display: block; white-space: nowrap; font: 600 clamp(26px, 2.6vw, 36px)/1 var(--serif); font-variation-settings: 'SOFT' 100; letter-spacing: -.03em; color: var(--ci); margin-bottom: 12px; }
+.age b { display: block; font-size: 18px; font-weight: 800; margin-bottom: 6px; } .age p { font-size: 15.5px; color: rgba(36,34,42,.8); }
+@media (max-width: 560px) { .ages { grid-template-columns: 1fr; } }
+/* passos en línia, sense targetes */
+.steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); margin-top: 48px; counter-reset: s; }
+.steps3 > div { counter-increment: s; }
+.steps3 > div::before { content: '0' counter(s); display: block; font: 600 clamp(48px, 5vw, 72px)/.9 var(--serif); font-variation-settings: 'SOFT' 100; letter-spacing: -.04em; color: var(--ci, var(--lav-i)); margin-bottom: 18px; }
+.steps3 h3 { font-size: 24px; margin-bottom: 10px; } .steps3 p { color: rgba(36,34,42,.76); }
+@media (max-width: 860px) { .steps3 { grid-template-columns: 1fr; } }
+/* taula de rols: files alternes en lloc de línies */
+.roles { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--paper); border-radius: 28px; overflow: hidden; box-shadow: var(--shadow); font-size: 16px; }
+.roles th, .roles td { padding: 16px 20px; text-align: left; } .roles tbody tr:nth-child(odd) td { background: #F6F4EF; }
+.roles thead th { font: 600 20px var(--serif); font-variation-settings: 'SOFT' 100; color: var(--ink); padding-top: 22px; padding-bottom: 18px; }
+.roles td:first-child { font-weight: 700; } .roles td.y, .roles td.n { text-align: center; width: 18%; }
+.roles td.y i, .roles td.n i { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-style: normal; font-weight: 800; }
+.roles td.y i { background: var(--men); color: var(--men-i); } .roles td.n i { color: #a19dab; }
+.roles thead th:not(:first-child) { text-align: center; }
+.tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 28px; }
 .faqgroup { margin-top: 40px; } .faqgroup h2 { font-size: clamp(22px, 2.6vw, 28px); margin-bottom: 14px; }
 details.q { background: var(--paper); border-radius: 18px; padding: 0 22px; box-shadow: var(--shadow); margin-bottom: 10px; }
 details.q summary { min-height: 62px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-weight: 700; font-size: 17px; cursor: pointer; list-style: none; }
@@ -91,3 +120,4 @@ details.q[open] summary::after { transform: rotate(45deg); } details.q p { color
   background: radial-gradient(60% 90% at 0% 0%, rgba(232,228,250,.75), transparent 70%), radial-gradient(55% 90% at 100% 0%, rgba(220,235,250,.7), transparent 70%), radial-gradient(60% 90% at 100% 100%, rgba(252,230,214,.6), transparent 70%), radial-gradient(60% 90% at 0% 100%, rgba(217,242,232,.65), transparent 70%), #FDFCFA; box-shadow: inset 0 0 0 1px rgba(36,34,42,.05); }
 .cta .lead { margin: 16px auto 30px; } .cta .row { justify-content: center; }
 .rv { will-change: transform, opacity; }
+.chap .head > .kick:first-child { margin-top: 0; }
