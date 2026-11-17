@@ -134,6 +134,7 @@
     .it { display: flex; align-items: center; gap: 9px; } .it .av { width: 32px; height: 32px; border-radius: 11px; display: grid; place-items: center; font-weight: 800; font-size: 13px; flex: none; }
     .it b { display: block; font-size: 12.5px; line-height: 1.25; } .it small { display: block; font-size: 10.5px; line-height: 1.3; color: var(--a-ink2); } .it .g { flex: 1; min-width: 0; }
     .big { font: 600 24px/1.1 var(--serif); }
+    .cd.stat { display: flex; flex-direction: column; gap: 6px; } .cd.stat .big { margin-top: auto; }   /* els números sempre a la mateixa altura */
     .pl { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 99px; font-size: 10px; font-weight: 800; white-space: nowrap; }
     .pl.men { background: var(--men); color: var(--men-i); } .pl.man { background: var(--man); color: var(--man-i); } .pl.cel { background: var(--cel); color: var(--cel-i); } .pl.pre { background: var(--pre); color: var(--pre-i); } .pl.ros { background: var(--ros); color: var(--ros-i); } .pl.lav { background: var(--lav); color: var(--lav-i); }
     .tabs { position: absolute; left: 0; right: 0; bottom: 0; height: 78px; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-top: 1px solid rgba(42,37,64,.07); display: flex; padding: 8px 6px 0; z-index: 5; }
@@ -497,7 +498,7 @@
     const SCREENS = [
       { id: 'dash', tabs: () => [T_ADMIN(), 0], html: () => `
         <div class="a" style="--d:0"><div class="eb">Acadèmia Nord · ${L('dilluns 16 de novembre', 'lunes 16 de noviembre')}</div><h4>${L('Bona tarda, Marta', 'Buenas tardes, Marta')}</h4></div>
-        <div class="a" style="--d:.1;display:flex;gap:8px"><div class="cd" style="flex:1;background:var(--cel)"><div class="eb">${L('Classes avui', 'Clases hoy')}</div><div class="big">32</div></div><div class="cd" style="flex:1;background:var(--men)"><div class="eb">${L('Ja fetes', 'Ya hechas')}</div><div class="big"><span data-count="21">0</span></div></div><div class="cd" style="flex:1;background:var(--man)"><div class="eb">${L('Alumnes', 'Alumnos')}</div><div class="big">186</div></div></div>
+        <div class="a" style="--d:.1;display:flex;gap:8px"><div class="cd stat" style="flex:1;background:var(--cel)"><div class="eb">${L('Classes avui', 'Clases hoy')}</div><div class="big">32</div></div><div class="cd stat" style="flex:1;background:var(--men)"><div class="eb">${L('Ja fetes', 'Ya hechas')}</div><div class="big"><span data-count="21">0</span></div></div><div class="cd stat" style="flex:1;background:var(--man)"><div class="eb">${L('Alumnes', 'Alumnos')}</div><div class="big">186</div></div></div>
         <div class="cd a" style="--d:.22"><div class="eb">${L('Equip · classes d\'avui', 'Equipo · clases de hoy')}</div>${tutor('Ana Soler', 9, 'lav', .3)}${tutor('Bru Vidal', 8, 'pre', .4)}${tutor('Clara Mas', 8, 'ros', .5)}${tutor('Dani Font', 7, 'cel', .6)}</div>
         <div class="cd it a" style="--d:.45;background:var(--pre)">${av('4', 'ros')}<div class="g"><b>${L('4 coses per decidir', '4 cosas por decidir')}</b><small>${L('2 canvis d\'hora, 1 classe extra i 1 pagament', '2 cambios de hora, 1 clase extra y 1 pago')}</small></div></div>` },
       { id: 'lock', html: () => `<div class="lock"></div>
@@ -684,6 +685,7 @@
 
     // ---------- Bucle: scroll amb inèrcia per a tot ----------
     let sy = scrollY, t0 = performance.now();
+    const PAGE_BG = getComputedStyle(document.body).backgroundColor; let lastEdge = '';
     function plateau(raw) { const i = Math.floor(raw), f = raw - i; return i + (f < 0.2 ? 0 : f > 0.8 ? 1 : smooth((f - 0.2) / 0.6)); }
     function frame(now) {
       const y = scrollY;
@@ -745,7 +747,11 @@
 
       // fons
       const a = PRGB[Math.min(PRGB.length - 1, Math.floor(s))], b = PRGB[Math.min(PRGB.length - 1, Math.floor(s) + 1)], ff = s - Math.floor(s);
-      tint.style.background = `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * ff)).join(',')})`;
+      const tintRgb = `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * ff)).join(',')})`;
+      tint.style.background = tintRgb;
+      // si es passa de scroll, el que es veu per fora ha de ser del color de la part de la pàgina que hi ha
+      const edgeBg = y < tourTop + scrollLen ? tintRgb : PAGE_BG;   // a dalt, el color del pas; a baix, el de la pàgina
+      if (edgeBg !== lastEdge) { document.documentElement.style.backgroundColor = edgeBg; lastEdge = edgeBg; }
       const cur = Math.round(s); [...dotsEl.children].forEach((d, k) => d.classList.toggle('on', k === cur));
       hint.style.opacity = s > 0.15 ? 0 : outC(clamp((now - t0 - 1600) / 600));
 

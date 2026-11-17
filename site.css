@@ -8,7 +8,7 @@
   --shadow: 0 1px 2px rgba(36,34,42,.05), 0 18px 36px -26px rgba(36,34,42,.35);
 }
 * { box-sizing: border-box; }
-html { scroll-padding-top: 84px; }
+html { scroll-padding-top: 84px; background: var(--bg); }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 h1, h2, h3 { margin: 0; font-family: var(--serif); font-variation-settings: 'SOFT' 100; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
 h1 { font-size: clamp(38px, 5.4vw, 64px); } h2 { font-size: clamp(28px, 3.6vw, 42px); } h3 { font-size: 20px; letter-spacing: -.01em; }
