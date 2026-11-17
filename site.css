@@ -121,3 +121,24 @@ details.q[open] summary::after { transform: rotate(45deg); } details.q p { color
 .cta .lead { margin: 16px auto 30px; } .cta .row { justify-content: center; }
 .rv { will-change: transform, opacity; }
 .chap .head > .kick:first-child { margin-top: 0; }
+
+/* ===== Capçalera: idioma com a text, botons petits ===== */
+.lang { display: inline-flex; align-items: center; gap: 2px; background: none; padding: 0; border-radius: 0; }
+.lang button { border: 0; background: none; min-width: 0; height: 32px; padding: 0 6px; border-radius: 8px; font: 700 13px var(--sans); letter-spacing: .04em; color: rgba(36,34,42,.4); cursor: pointer; box-shadow: none; transition: color .2s; }
+.lang button:hover { color: var(--ink2); } .lang button.on { background: none; color: var(--ink); box-shadow: none; }
+.nav .right { gap: 8px; } .nav .right .lang { margin-right: 6px; }
+.nav .btn.sm { min-height: 36px; padding: 0 14px; font-size: 13.5px; }
+
+/* ===== Squircles a tot el web, com a l'app (corner-shape: squircle) ===== */
+@supports (corner-shape: squircle) {
+  .btn { border-radius: 20px; } .btn.sm { border-radius: 15px; } .lang button { border-radius: 10px; }
+  .chip, .menu-btn { border-radius: 16px; }
+  .btn, .btn.sm, .chip, .menu-btn, .lang button { corner-shape: squircle; }
+}
+@supports (corner-shape: squircle) {
+  .chap { border-radius: 56px; } .chap .it.key, .age { border-radius: 38px; } .cta { border-radius: 52px; }
+  details.q { border-radius: 26px; } .roles, .tablewrap { border-radius: 38px; } .card { border-radius: 34px; }
+  .chap, .chap .it.key, .age, .cta, details.q, .roles, .tablewrap, .card { corner-shape: squircle; }
+  .chap.open { border-radius: 0; }
+  @media (max-width: 860px) { .chap { border-radius: 44px; } }
+}

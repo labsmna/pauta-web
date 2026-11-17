@@ -222,6 +222,33 @@
     .final .lead { margin: 18px auto 32px; } .final .row { justify-content: center; }
     footer { padding: 40px 0 56px; color: var(--ink2); font-size: 14px; }
     footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; align-items: center; } footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+/* ===== Capçalera: idioma com a text, botons petits ===== */
+.lang { display: inline-flex; align-items: center; gap: 2px; background: none; padding: 0; border-radius: 0; }
+.lang button { border: 0; background: none; min-width: 0; height: 32px; padding: 0 6px; border-radius: 8px; font: 700 13px var(--sans); letter-spacing: .04em; color: rgba(36,34,42,.4); cursor: pointer; box-shadow: none; transition: color .2s; }
+.lang button:hover { color: var(--ink2); } .lang button.on { background: none; color: var(--ink); box-shadow: none; }
+.nav .right { gap: 8px; } .nav .right .lang { margin-right: 6px; }
+.nav .btn.sm { min-height: 36px; padding: 0 14px; font-size: 13.5px; }
+
+/* ===== Squircles a tot el web, com a l'app (corner-shape: squircle) ===== */
+@supports (corner-shape: squircle) {
+  .btn { border-radius: 20px; } .btn.sm { border-radius: 15px; } .lang button { border-radius: 10px; }
+  .chip, .menu-btn { border-radius: 16px; }
+  .btn, .btn.sm, .chip, .menu-btn, .lang button { corner-shape: squircle; }
+}
+@supports (corner-shape: squircle) {
+  .ctl { border-radius: 34px; } .as { border-radius: 30px; } .res { border-radius: 34px; } .res.tot .per, .viz .phint { border-radius: 18px; }
+  .plan .step { border-radius: 36px; } .plan .num { border-radius: 22px; } .solo .box { border-radius: 44px; } .final .box { border-radius: 50px; }
+  details.q { border-radius: 26px; } .trust span { border-radius: 16px; }
+  .ctl, .as, .res, .res.tot .per, .viz .phint, .plan .step, .plan .num, .solo .box, .final .box, details.q, .trust span { corner-shape: squircle; }
+  /* dins del mòbil, les mateixes formes que l'app de veritat */
+  .cd { border-radius: 22px; } .it .av { border-radius: 14px; } .btnm { border-radius: 16px; } .nt { border-radius: 22px; } .nt .ap { border-radius: 9px; }
+  .toastm { border-radius: 18px; } .tabs i { border-radius: 16px; } .sheet { border-radius: 34px 34px 0 0; }
+  .cd, .it .av, .btnm, .nt, .nt .ap, .toastm, .tabs i, .sheet { corner-shape: squircle; }
+  /* el telèfon també té cantonades contínues, com un iPhone */
+  .p-frame, .edge i { border-radius: 72px; } .p-bezel { border-radius: 66px; } .p-screen { border-radius: 58px; }
+  .p-frame, .edge i, .p-bezel, .p-screen { corner-shape: squircle; }
+}
   </style>
 </head>
 <body>
