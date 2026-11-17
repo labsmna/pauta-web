@@ -9,16 +9,16 @@
   <meta property="og:title" content="Pauta · Que el teu equip faci classe, no secretaria">
   <meta property="og:description" content="Horaris, faltes i cobraments amb targeta per a acadèmies i professors particulars, en un sol lloc.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Pauta","applicationCategory":"BusinessApplication","operatingSystem":"Web, iOS, Android","inLanguage":["ca","es"],"description":"Programari de gestió per a acadèmies i professors particulars: horaris, faltes, cobraments amb targeta, famílies i equip."}</script>
   <style>
     :root {
       --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #66636E; --line: #ECE8E1;
       --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #1E6A50;
       --cel: #DCEBFA; --cel-i: #21568C; --pre: #FCE6D6; --pre-i: #8A4520; --ros: #F9DFE4; --ros-i: #8E3148;
-      --serif: Fraunces, Georgia, serif; --sans: Manrope, system-ui, sans-serif; --ease: cubic-bezier(.2,.8,.2,1); --spring: cubic-bezier(.34,1.4,.64,1);
+      --serif: Fraunces, Georgia, serif; --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;   /* títols: Fraunces; text: provisional Helvetica (a Windows, Arial) */ --ease: cubic-bezier(.2,.8,.2,1); --spring: cubic-bezier(.34,1.4,.64,1);
       --shadow: 0 1px 2px rgba(36,34,42,.05), 0 18px 36px -26px rgba(36,34,42,.35);
       --a-bg: #EFECFA; --a-ink: #2A2540; --a-ink2: #5F5A7A;
     }
@@ -93,7 +93,7 @@
     .phone { transform-style: preserve-3d; }
     /* gruix: capes del marc de titani apilades cap enrere, i la tapa de vidre al darrere */
     .edge { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
-    .edge i { position: absolute; inset: 0; border-radius: 58px; background: linear-gradient(90deg, #9fa2a8 0%, #eceef1 9%, #c3c6cc 30%, #b2b5bb 50%, #c3c6cc 70%, #eceef1 91%, #9fa2a8 100%); transform: translateZ(calc(var(--z) * -1px)); }
+    .edge i { position: absolute; inset: 0; border-radius: 60px; background: linear-gradient(90deg, #9fa2a8 0%, #eceef1 9%, #c3c6cc 30%, #b2b5bb 50%, #c3c6cc 70%, #eceef1 91%, #9fa2a8 100%); transform: translateZ(calc(var(--z) * -1px)); }
     /* dors d'iPhone 17 Pro (plata): altiplà de càmeres d'alumini a tota l'amplada i vidre a sota.
        Es veu des del darrere, així que aquí dins l'esquerra i la dreta estan intercanviades. */
     .edge i.back { overflow: hidden; background: linear-gradient(165deg, #eef0f3 0%, #dfe2e6 55%, #d3d6db 100%); box-shadow: inset 0 0 0 2px #b9bcc2; }
@@ -103,13 +103,13 @@
     .edge i.back .lens::after { content: ''; position: absolute; left: 30%; top: 26%; width: 14px; height: 9px; border-radius: 50%; background: rgba(255,255,255,.35); transform: rotate(-30deg); }
     .edge i.back .dot { position: absolute; border-radius: 50%; }
     .edge i.back .logo { position: absolute; left: 50%; top: 58%; width: 64px; height: 64px; margin: -32px 0 0 -32px; opacity: .55; filter: grayscale(.3); }
-    .phone { width: 332px; height: 676px; position: absolute; left: 0; top: 0; transform-origin: top left; }
-    .p-frame { position: absolute; inset: 0; border-radius: 58px; padding: 6px; background: linear-gradient(145deg, #f1f2f4 0%, #b9bcc2 22%, #8e9198 50%, #b9bcc2 78%, #eceef1 100%); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.5), inset 0 0 0 3px rgba(0,0,0,.3), 0 50px 70px -30px rgba(36,34,42,.45), 0 20px 30px -20px rgba(36,34,42,.35); }
-    .p-bezel { position: relative; width: 100%; height: 100%; border-radius: 52px; background: #0b0b0c; padding: 8px; }
-    .p-screen { position: relative; width: 100%; height: 100%; border-radius: 44px; overflow: hidden; background: var(--a-bg); isolation: isolate; font-family: var(--sans); color: var(--a-ink); }
+    .phone { width: 332px; height: 696px; position: absolute; left: 0; top: 0; transform-origin: top left; }
+    .p-frame { position: absolute; inset: 0; border-radius: 60px; padding: 4px; background: linear-gradient(145deg, #f1f2f4 0%, #b9bcc2 22%, #8e9198 50%, #b9bcc2 78%, #eceef1 100%); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.5), inset 0 0 0 3px rgba(0,0,0,.3), 0 50px 70px -30px rgba(36,34,42,.45), 0 20px 30px -20px rgba(36,34,42,.35); }
+    .p-bezel { position: relative; width: 100%; height: 100%; border-radius: 56px; background: #0b0b0c; padding: 5px; }
+    .p-screen { position: relative; width: 100%; height: 100%; border-radius: 51px; overflow: hidden; background: var(--a-bg); isolation: isolate; font-family: var(--sans); color: var(--a-ink); }
     .p-btn { position: absolute; width: 4px; border-radius: 3px; background: linear-gradient(90deg, #8e9198, #e6e8eb, #8e9198); transform: translateZ(calc(var(--pd, 30px) * -0.5)); }
-    .p-btn.l1 { left: -3px; top: 118px; height: 28px; } .p-btn.l2 { left: -3px; top: 168px; height: 52px; } .p-btn.l3 { left: -3px; top: 232px; height: 52px; } .p-btn.r { right: -3px; top: 190px; height: 82px; }
-    .island { position: absolute; z-index: 30; top: 11px; left: 50%; width: 94px; height: 28px; margin-left: -47px; border-radius: 20px; background: #000; }
+    .p-btn.l1 { left: -3px; top: 118px; height: 28px; } .p-btn.l2 { left: -3px; top: 168px; height: 52px; } .p-btn.l3 { left: -3px; top: 232px; height: 52px; } .p-btn.r { right: -3px; top: 190px; height: 82px; } .p-btn.r2 { right: -3px; top: 352px; height: 46px; }
+    .island { position: absolute; z-index: 30; top: 10px; left: 50%; width: 86px; height: 26px; margin-left: -43px; border-radius: 20px; background: #000; }
     .island::after { content: ''; position: absolute; right: 12px; top: 9px; width: 9px; height: 9px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2a3a5c, #0a0f1c 70%); }
     .p-status { position: absolute; z-index: 25; top: 0; left: 0; right: 0; height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 8px 26px 0 30px; font-weight: 800; font-size: 14px; color: #14121f; }
     .glare { position: absolute; inset: 0; z-index: 40; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 32%, rgba(255,255,255,0) 72%, rgba(255,255,255,.08) 100%); }
@@ -246,8 +246,8 @@
   .toastm { border-radius: 18px; } .tabs i { border-radius: 16px; } .sheet { border-radius: 34px 34px 0 0; }
   .cd, .it .av, .btnm, .nt, .nt .ap, .toastm, .tabs i, .sheet { corner-shape: squircle; }
   /* el telèfon també té cantonades contínues, com un iPhone */
-  .p-frame, .edge i { border-radius: 72px; } .p-bezel { border-radius: 66px; } .p-screen { border-radius: 58px; }
-  .p-frame, .edge i, .p-bezel, .p-screen { corner-shape: squircle; }
+  .p-frame, .edge i { border-radius: 68px; } .p-bezel { border-radius: 64px; } .p-screen { border-radius: 59px; }
+  .p-frame, .edge i, .p-bezel, .p-screen { corner-shape: superellipse(1.35); }
 }
   </style>
 </head>
@@ -336,7 +336,7 @@
         <div class="rig" id="rig" aria-hidden="true">
           <div class="phone-box" id="pbox">
             <div class="phone" id="phone">
-              <div class="edge" id="edge"></div><i class="p-btn l1"></i><i class="p-btn l2"></i><i class="p-btn l3"></i><i class="p-btn r"></i>
+              <div class="edge" id="edge"></div><i class="p-btn l1"></i><i class="p-btn l2"></i><i class="p-btn l3"></i><i class="p-btn r"></i><i class="p-btn r2"></i>
               <div class="p-frame"><div class="p-bezel"><div class="p-screen" id="pscreen">
                 <i class="island"></i>
                 <div class="p-status"><span>17:12</span><span style="display:flex;gap:5px;align-items:center">
@@ -618,9 +618,9 @@
       tour.style.height = `${((steps.length - 1) * STEP_VH + 1) * 100}vh`;
       tourTop = tour.getBoundingClientRect().top + scrollY; scrollLen = Math.max(1, tour.offsetHeight - vh);
       const avail = mobile ? (vh - 64) * 0.4 : vh - 64 - 70;
-      ps = clamp(avail / 676, 0.42, 1);
-      phone.style.transform = `scale(${ps})`; pbox.style.width = `${332 * ps}px`; pbox.style.height = `${676 * ps}px`;
-      rig.style.marginLeft = `${-166 * ps}px`; buildEdge(); stage.style.setProperty('--phh', `${Math.round(676 * ps)}px`);
+      ps = clamp(avail / 696, 0.42, 1);
+      phone.style.transform = `scale(${ps})`; pbox.style.width = `${332 * ps}px`; pbox.style.height = `${696 * ps}px`;
+      rig.style.marginLeft = `${-166 * ps}px`; buildEdge(); stage.style.setProperty('--phh', `${Math.round(696 * ps)}px`);
       cacheRv();
     }
 
@@ -713,7 +713,7 @@
       let ry = (lp('ry') + arc * 24 * dir) * m + (RM ? 0 : Math.sin(time * 0.7) * 2.2);
       let rx = (lp('rx') + arc * 8) * m + (RM ? 0 : Math.sin(time * 0.9) * 1.4);
       let rz = (lp('rz') - arc * 6 * dir) * m;
-      const ph = 676 * ps, cy = mobile ? 64 + ph / 2 + 10 : 64 + (vh - 64) / 2;
+      const ph = 696 * ps, cy = mobile ? 64 + ph / 2 + 10 : 64 + (vh - 64) / 2;
       // Encaix: amb la perspectiva i els girs, el mòbil no pot sortir mai de la pantalla (ni tapar el text a sota, en mòbil)
       let sfix = 1;
       {
