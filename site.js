@@ -1,4 +1,4 @@
-// Pàgines del web: capçalera i peu comuns, idioma, entrada amb inèrcia lligada a l'scroll i botons de demo.
+// Pàgines del web: capçalera i peu comuns, idioma, entrada amb inèrcia lligada a l'scroll.
 (function () {
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -19,14 +19,14 @@
   header.innerHTML = `<div class="wrap"><a class="brand" href="./" aria-label="Pauta">${logo(30)}Pauta</a>
     <ul id="navlist">${NAV.map(([h, ca, es]) => `<li><a href="${h}" data-es="${es}" ${h === here ? 'aria-current="page"' : ''}>${ca}</a></li>`).join('')}<li class="lang-m"><div class="lang" role="group" aria-label="Idioma"><button data-l="ca" class="on" aria-pressed="true">CA</button><button data-l="es" aria-pressed="false">ES</button></div></li></ul>
     <div class="right"><div class="lang" role="group" aria-label="Idioma"><button data-l="ca" class="on" aria-pressed="true">CA</button><button data-l="es" aria-pressed="false">ES</button></div>
-    <a class="btn sec sm login" href="/app" data-es="Entrar">Entra</a><a class="btn prim sm" href="/app?onboarding" data-es="Empieza">Comença</a>
+    <a class="btn sec sm login" href="https://pauta-apt.pages.dev/app" data-es="Entrar">Entra</a><a class="btn prim sm" href="https://pauta-apt.pages.dev/app?onboarding" data-es="Empieza">Comença</a>
     <button class="menu-btn" aria-label="Menú" aria-expanded="false" aria-controls="navlist"><i></i></button></div></div>`;
   document.body.prepend(header);
   const footer = document.createElement('footer'); footer.className = 'foot';
   footer.innerHTML = `<div class="wrap"><div><a class="brand" href="./" style="font-size:18px">${logo(24)}Pauta</a><p style="margin-top:12px;max-width:300px" data-es="Software de gestión para academias y profesores particulares.">Programari de gestió per a acadèmies i professors particulars.</p></div>
     <div><h4 data-es="Producto">Producte</h4><nav><a href="./" data-es="Cómo funciona">Com funciona</a><a href="funcions" data-es="Funciones">Funcions</a><a href="academies" data-es="Academias">Acadèmies</a></nav></div>
     <div><h4 data-es="Confianza">Confiança</h4><nav><a href="seguretat" data-es="Seguridad y datos">Seguretat i dades</a><a href="preguntes" data-es="Preguntas">Preguntes</a></nav></div>
-    <div><h4 data-es="Acceso">Accés</h4><nav><a href="/app" data-es="Entrar">Entra</a><a href="/familia" data-es="Familias">Famílies</a><a href="/app?onboarding" data-es="Crear una cuenta">Crea un compte</a></nav></div></div>`;
+    <div><h4 data-es="Acceso">Accés</h4><nav><a href="https://pauta-apt.pages.dev/app" data-es="Entrar">Entra</a><a href="/familia" data-es="Familias">Famílies</a><a href="https://pauta-apt.pages.dev/app?onboarding" data-es="Crear una cuenta">Crea un compte</a></nav></div></div>`;
   document.body.append(footer);
   const mb = $('.menu-btn'), nl = $('#navlist');
   mb.addEventListener('click', () => { const o = nl.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
@@ -42,18 +42,6 @@
   }
   $$('.lang button').forEach((b) => b.addEventListener('click', () => { try { localStorage.setItem('pauta.lang', b.dataset.l); } catch { /* sense emmagatzematge */ } setLang(b.dataset.l); }));
   try { if (localStorage.getItem('pauta.lang') === 'es') setLang('es'); } catch { /* idem */ }
-
-  // Demos
-  $$('[data-demo]').forEach((btn) => btn.addEventListener('click', async () => {
-    if (btn.disabled) return;
-    const academy = btn.dataset.demo === 'academy', txt = btn.innerHTML;
-    btn.disabled = true; btn.style.opacity = '.7'; btn.textContent = academy ? L('Preparant l\'acadèmia…', 'Preparando la academia…') : L('Preparant la demo…', 'Preparando la demo…');
-    try {
-      const r = await fetch(academy ? '/api/demo/academy' : '/api/demo/start', { method: 'POST', credentials: 'same-origin' });
-      if (!r.ok) throw new Error();
-      location.assign('/app');
-    } catch { btn.disabled = false; btn.style.opacity = ''; btn.innerHTML = txt; alert(L('No s\'ha pogut obrir la demo. Torna-ho a provar.', 'No se ha podido abrir la demo. Vuelve a intentarlo.')); }
-  }));
 
   // Entrada amb inèrcia: el contingut segueix l'scroll amb una mica de retard
   let rvs = [], sy = scrollY, vh = innerHeight;
