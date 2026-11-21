@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap');
 :root {
   --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #57545F; --line: #ECE8E1;
-  --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #1E6A50;
+  --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #2A9677;
   --cel: #DCEBFA; --cel-i: #21568C; --pre: #FCE6D6; --pre-i: #8A4520; --ros: #F9DFE4; --ros-i: #8E3148;
   --serif: Fraunces, Georgia, serif; --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;   /* títols: Fraunces; text: provisional Helvetica (a Windows, Arial) */ --ease: cubic-bezier(.2,.8,.2,1);
   --shadow: 0 1px 2px rgba(36,34,42,.05), 0 18px 36px -26px rgba(36,34,42,.35);
@@ -142,3 +142,8 @@ details.q[open] summary::after { transform: rotate(45deg); } details.q p { color
   .chap.open { border-radius: 0; }
   @media (max-width: 860px) { .chap { border-radius: 44px; } }
 }
+
+/* Llistes de «capítol»: una peça destacada i tres de petites van en tres columnes alineades (abans la tercera quedava sola) */
+@media (min-width: 700px) { .chap .list:has(> .it:nth-child(4):last-child) { grid-template-columns: repeat(3, minmax(0, 1fr)); } .chap .list:has(> .it:nth-child(4):last-child) .it:not(.key) { display: grid; grid-template-rows: subgrid; grid-row: span 2; row-gap: 0; } .chap .list:has(> .it:nth-child(4):last-child) .it:not(.key) b { font-size: 16px; } }
+/* Bloc final: degradat de punta a punta, sense el centre blanc */
+.cta { background: linear-gradient(115deg, #E8E4FA 0%, #DCEBFA 34%, #D9F2E8 68%, #FCE6D6 100%); }
