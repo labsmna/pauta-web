@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap');
 :root {
   --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #57545F; --line: #ECE8E1;
-  --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #2A9677;
+  --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #177357;
   --cel: #DCEBFA; --cel-i: #21568C; --pre: #FCE6D6; --pre-i: #8A4520; --ros: #F9DFE4; --ros-i: #8E3148;
   --serif: Fraunces, Georgia, serif; --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;   /* títols: Fraunces; text: provisional Helvetica (a Windows, Arial) */ --ease: cubic-bezier(.2,.8,.2,1);
   --shadow: 0 1px 2px rgba(36,34,42,.05), 0 18px 36px -26px rgba(36,34,42,.35);
