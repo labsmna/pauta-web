@@ -50,10 +50,14 @@
   // Idioma
   const nodes = $$('[data-es]'); nodes.forEach((el) => { el.dataset.ca = el.innerHTML; });
   const titles = { ca: document.title, es: document.body.dataset.titleEs || document.title };
+  const desc = $('meta[name=description]'), descs = { ca: desc?.content, es: document.body.dataset.descEs || desc?.content };
+  const arias = $$('[data-es-aria]'); arias.forEach((el) => { el.dataset.caAria = el.getAttribute('aria-label') || ''; });
   function setLang(l) {
     document.documentElement.lang = l;
     nodes.forEach((el) => { el.innerHTML = l === 'es' ? el.dataset.es : el.dataset.ca; });
-    document.title = titles[l];
+    arias.forEach((el) => el.setAttribute('aria-label', l === 'es' ? el.dataset.esAria : el.dataset.caAria));
+    $$('[data-lang]').forEach((el) => { el.hidden = el.dataset.lang !== l; });     // textos llargs (legals): un bloc per idioma
+    document.title = titles[l]; if (desc) desc.content = descs[l];
     $$('.lang button').forEach((b) => { const on = b.dataset.l === l; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
   }
   $$('.lang button').forEach((b) => b.addEventListener('click', () => { try { localStorage.setItem('pauta.lang', b.dataset.l); } catch { /* sense emmagatzematge */ } setLang(b.dataset.l); }));

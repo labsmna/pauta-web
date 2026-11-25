@@ -9,17 +9,16 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="site.css">
 </head>
-<body>
+<body data-title-es="Cookies · Pauta" data-desc-es="Pauta solo usa las cookies imprescindibles para funcionar: ni analítica ni publicidad.">
   <main>
     <section class="phero">
       <div class="wrap">
-        <span class="eyebrow">Legal</span>
-        <h1>Galetes</h1>
-        <p class="lead">Pauta només fa servir les galetes imprescindibles perquè funcioni. No n'hi ha d'analítica ni de publicitat, i per això no et demanem permís amb cap bàner.</p>
+        <h1 data-es="Cookies">Galetes</h1>
+        <p class="lead" data-es="Pauta solo usa las cookies imprescindibles para funcionar. No hay ninguna de analítica ni de publicidad, y por eso no te pedimos permiso con ningún banner.">Pauta només fa servir les galetes imprescindibles perquè funcioni. No n'hi ha d'analítica ni de publicitat, i per això no et demanem permís amb cap bàner.</p>
       </div>
     </section>
     <section style="padding-top:0">
-      <div class="wrap legal">
+      <div class="wrap legal" data-lang="ca">
         <p class="updated">Darrera actualització: 25 de novembre de 2026</p>
 
         <h2>Què són</h2>
@@ -51,7 +50,7 @@
 
         <h2>Serveis de tercers</h2>
         <ul>
-          <li><b>Tipografies del web públic:</b> les pàgines informatives carreguen tipografies de Google Fonts. Per fer-ho, el navegador es connecta als servidors de Google, que reben la teva adreça IP. No es guarda cap galeta.</li>
+          <li><b>Tipografies:</b> el web i l'app carreguen tipografies de Google Fonts. Per fer-ho, el navegador es connecta als servidors de Google, que reben la teva adreça IP. No es guarda cap galeta.</li>
           <li><b>Pagaments amb targeta:</b> si pagues amb targeta, ho fas a la pàgina de Stripe, que fa servir les seves pròpies galetes per prevenir el frau.</li>
           <li><b>Google Calendar:</b> si el connectes, el permís el dones a la pàgina de Google, amb les seves galetes.</li>
         </ul>
@@ -59,6 +58,47 @@
         <h2>Com esborrar-les</h2>
         <p>Pots esborrar les galetes i l'emmagatzematge local des de la configuració del navegador. Si ho fas, hauràs de tornar a entrar a Pauta.</p>
         <p>Més informació a la <a href="privacitat">política de privacitat</a>.</p>
+      </div>
+      <div class="wrap legal" data-lang="es" hidden>
+        <p class="updated">Última actualización: 25 de noviembre de 2026</p>
+
+        <h2>Qué son</h2>
+        <p>Las cookies y el almacenamiento local son pequeños archivos que el navegador guarda al visitar una web. Las que son estrictamente necesarias para prestar el servicio que pides no necesitan consentimiento (art. 22.2 de la LSSI-CE). Todas las de Pauta son de este tipo.</p>
+
+        <h2>Cookies de Pauta</h2>
+        <div class="tbl"><table>
+          <thead><tr><th>Nombre</th><th>Para qué</th><th>Duración</th></tr></thead>
+          <tbody>
+            <tr><td><code>sid</code></td><td>Mantener la sesión de un profesor o de una academia. No se puede leer desde el navegador (<i>HttpOnly</i>) y solo viaja por conexión cifrada.</td><td>90 días, o hasta que cierras la sesión</td></tr>
+            <tr><td><code>fsid</code></td><td>Mantener la sesión de una familia o de un alumno. Mismas protecciones.</td><td>90 días, o hasta que cierras la sesión</td></tr>
+          </tbody>
+        </table></div>
+
+        <h2>Almacenamiento local</h2>
+        <p>Además, la app guarda en tu navegador algunas preferencias. No salen de tu dispositivo y no sirven para identificarte:</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Nombre</th><th>Para qué</th><th>Duración</th></tr></thead>
+          <tbody>
+            <tr><td><code>pauta.role</code></td><td>Recordar si la última vez entraste como profesor, para abrir la app más deprisa.</td><td>Hasta que lo borres</td></tr>
+            <tr><td><code>pauta.lang</code></td><td>El idioma elegido en la web (catalán o castellano).</td><td>Hasta que lo borres</td></tr>
+            <tr><td><code>pauta.haptics</code></td><td>Si quieres que el móvil vibre al tocar los botones.</td><td>Hasta que lo borres</td></tr>
+            <tr><td><code>pauta.photo</code></td><td>No volver a pedirte una foto de perfil si ya has respondido.</td><td>Hasta que lo borres</td></tr>
+            <tr><td><code>pauta.first</code>, <code>pauta.cal</code></td><td>Pasos de la primera entrada y el día que debe abrir el calendario.</td><td>Se borran en cuanto se usan</td></tr>
+            <tr><td><code>pauta.n</code>, <code>pauta.vb</code></td><td>Pequeños estados de la interfaz durante la visita.</td><td>Hasta que cierras la pestaña</td></tr>
+            <tr><td>Caché de la app</td><td>Guardar los archivos de la app (no tus datos) para que se abra más deprisa.</td><td>Hasta que hay una versión nueva</td></tr>
+          </tbody>
+        </table></div>
+
+        <h2>Servicios de terceros</h2>
+        <ul>
+          <li><b>Tipografías:</b> la web y la app cargan tipografías de Google Fonts. Para ello, el navegador se conecta a los servidores de Google, que reciben tu dirección IP. No se guarda ninguna cookie.</li>
+          <li><b>Pagos con tarjeta:</b> si pagas con tarjeta, lo haces en la página de Stripe, que usa sus propias cookies para prevenir el fraude.</li>
+          <li><b>Google Calendar:</b> si lo conectas, el permiso lo das en la página de Google, con sus cookies.</li>
+        </ul>
+
+        <h2>Cómo borrarlas</h2>
+        <p>Puedes borrar las cookies y el almacenamiento local desde la configuración del navegador. Si lo haces, tendrás que volver a entrar en Pauta.</p>
+        <p>Más información en la <a href="privacitat">política de privacidad</a>.</p>
       </div>
     </section>
   </main>

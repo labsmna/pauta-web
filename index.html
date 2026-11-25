@@ -10,7 +10,7 @@
   <meta property="og:description" content="Horaris, faltes i cobraments amb targeta per a acadèmies i professors particulars, en un sol lloc.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400..700,0..100&family=Domine:wght@400..700&display=swap">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Pauta","applicationCategory":"BusinessApplication","operatingSystem":"Web, iOS, Android","inLanguage":["ca","es"],"description":"Programari de gestió per a acadèmies i professors particulars: horaris, faltes, cobraments amb targeta, famílies i equip."}</script>
   <style>
@@ -18,7 +18,7 @@
       --bg: #FBFAF7; --paper: #FFFFFF; --ink: #24222A; --ink2: #66636E; --line: #ECE8E1;
       --lav: #E8E4FA; --lav-i: #4A3E96; --man: #FAF0C8; --man-i: #6A560E; --men: #D9F2E8; --men-i: #177357;
       --cel: #DCEBFA; --cel-i: #21568C; --pre: #FCE6D6; --pre-i: #8A4520; --ros: #F9DFE4; --ros-i: #8E3148;
-      --serif: Fraunces, Georgia, serif; --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;   /* títols: Fraunces; text: provisional Helvetica (a Windows, Arial) */ --ease: cubic-bezier(.2,.8,.2,1); --spring: cubic-bezier(.34,1.4,.64,1);
+      --serif: Fraunces, Georgia, serif; --sans: Domine, Georgia, 'Times New Roman', serif;   /* títols: Fraunces; text: Domine */ --ease: cubic-bezier(.2,.8,.2,1); --spring: cubic-bezier(.34,1.4,.64,1);
       --shadow: 0 1px 2px rgba(36,34,42,.05), 0 18px 36px -26px rgba(36,34,42,.35);
       --a-bg: #EFECFA; --a-ink: #2A2540; --a-ink2: #5F5A7A;
     }
@@ -176,7 +176,7 @@
     .calc { background: var(--paper); }
     .calc .box { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); grid-template-areas: "head inputs" "res inputs"; gap: 22px clamp(28px, 4vw, 60px); align-items: start; }
     .chead { grid-area: head; } .inputs { grid-area: inputs; } .results { grid-area: res; }
-    .chead h2 { font-size: clamp(30px, 3.2vw, 44px); margin-top: 16px; } .chead .lead { margin-top: 12px; font-size: 17px; }
+    .chead h2 { font-size: clamp(30px, 3.2vw, 44px); margin-top: 0; } .chead .lead { margin-top: 12px; font-size: 17px; }
     .inputs { display: grid; gap: 12px; }
     .ctl { border-radius: 24px; padding: 16px 20px 14px; background: var(--c); }
     .ctl .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -294,49 +294,42 @@
         </article>
 
         <article class="st" data-i="1">
-          <span class="chip t-pre ln" data-es="El día a día">El dia a dia</span>
           <h2 class="split" data-es="Cada clase arrastra una cola de mensajes.">Cada classe arrossega una cua de missatges.</h2>
           <p class="ln" data-es="Cambios de hora, faltas de última hora, «¿cuánto te debo?», «¿te ha llegado el Bizum?». Cada profesor los contesta uno a uno, fuera de horas, y nadie tiene la foto completa.">Canvis d'hora, faltes d'última hora, «quant et dec?», «t'ha arribat el Bizum?». Cada professor els respon d'un en un, fora d'hores, i ningú no té la foto completa.</p>
           <ul><li class="ln"><i class="tick"></i><span data-es="Horas cada mes que nadie factura">Hores cada mes que ningú no factura</span></li><li class="ln"><i class="tick"></i><span data-es="Información repartida entre móviles, libretas y hojas de cálculo">Informació repartida entre mòbils, llibretes i fulls de càlcul</span></li></ul>
         </article>
 
         <article class="st" data-i="2">
-          <span class="chip t-ros ln" data-es="Lo que no se ve">El que no es veu</span>
           <h2 class="split" data-es="Y cada mes se escapa dinero sin que te des cuenta.">I cada mes s'escapen diners sense que te n'adonis.</h2>
           <p class="ln" data-es="Una falta sin aviso que no se cobra, una clase cambiada que nadie apunta, un desplazamiento olvidado. Pequeñas cantidades que, al final del curso, suman mucho.">Una falta sense avís que no es cobra, una classe canviada que ningú no apunta, un desplaçament oblidat. Petites quantitats que, a final de curs, sumen molt.</p>
           <ul><li class="ln"><i class="tick"></i><span data-es="Faltas sin aviso que no se cobran">Faltes sense avís que no es cobren</span></li><li class="ln"><i class="tick"></i><span data-es="Cambios y clases extra que no llegan al recibo">Canvis i classes extra que no arriben al rebut</span></li></ul>
         </article>
 
         <article class="st" data-i="3">
-          <span class="chip t-cel ln" data-es="Con Pauta">Amb Pauta</span>
           <h2 class="split" data-es="Los cambios llegan como peticiones, no como mensajes.">Els canvis arriben com a peticions, no com a missatges.</h2>
           <p class="ln" data-es="La familia elige entre las horas libres del profesor. Alguien del equipo lo acepta con un toque y la agenda, el profesor y la familia se actualizan a la vez.">La família tria entre les hores lliures del professor. Algú de l'equip ho accepta amb un toc i l'agenda, el professor i la família s'actualitzen alhora.</p>
           <ul><li class="ln"><i class="tick"></i><span data-es="Nada cambia sin tu aprobación">Res no canvia sense la teva aprovació</span></li><li class="ln"><i class="tick"></i><span data-es="Recordatorios automáticos el día antes">Recordatoris automàtics el dia abans</span></li></ul>
         </article>
 
         <article class="st" data-i="4">
-          <span class="chip t-man ln" data-es="Faltas">Faltes</span>
           <h2 class="split" data-es="Tu política de faltas, aplicada sin discusiones.">La teva política de faltes, aplicada sense discussions.</h2>
           <p class="ln" data-es="La familia ve qué costará una falta antes de avisar. Si avisa a tiempo, recibe una clase para recuperar; si no, se cobra lo que tú hayas decidido.">La família veu què costarà una falta abans d'avisar. Si avisa a temps, rep una classe per recuperar; si no, es cobra el que tu hagis decidit.</p>
           <ul><li class="ln"><i class="tick"></i><span data-es="Créditos de recuperación automáticos">Crèdits de recuperació automàtics</span></li><li class="ln"><i class="tick"></i><span data-es="Ningún cobro sorpresa: todo se ve antes">Cap cobrament sorpresa: tot es veu abans</span></li></ul>
         </article>
 
         <article class="st" data-i="5">
-          <span class="chip t-men ln" data-es="Cobros">Cobraments</span>
           <h2 class="split" data-es="Las familias pagan con tarjeta, desde el móvil.">Les famílies paguen amb targeta, des del mòbil.</h2>
           <p class="ln" data-es="Cada mes, un recibo claro por familia, con las faltas, los bonos y los desplazamientos ya calculados. Pagan en un toque y el recibo queda marcado como pagado. Si lo prefieres, también puedes cobrar por Bizum o transferencia.">Cada mes, un rebut clar per família, amb les faltes, els bons i els desplaçaments ja calculats. Paguen en un toc i el rebut queda marcat com a pagat. Si ho prefereixes, també pots cobrar per Bizum o transferència.</p>
           <ul><li class="ln"><i class="tick"></i><span data-es="Recordatorios de pago automáticos">Recordatoris de pagament automàtics</span></li><li class="ln"><i class="tick"></i><span data-es="Factura en PDF para cada familia">Factura en PDF per a cada família</span></li></ul>
         </article>
 
         <article class="st" data-i="6">
-          <span class="chip t-lav ln" data-es="Equipo">Equip</span>
           <h2 class="split" data-es="Cada profesor ve lo suyo. La dirección lo ve todo.">Cada professor veu el que li toca. La direcció ho veu tot.</h2>
           <p class="ln" data-es="Los tutores tienen su acceso, sus clases y sus alumnos. El dinero y la configuración solo los ve quien administra la academia.">Els tutors tenen el seu accés, les seves classes i els seus alumnes. Els diners i la configuració només els veu qui administra l'acadèmia.</p>
           <ul><li class="ln"><i class="tick"></i><span data-es="Roles y permisos para cada miembro del equipo">Rols i permisos per a cada membre de l'equip</span></li><li class="ln"><i class="tick"></i><span data-es="Carga de trabajo por profesor, de un vistazo">Càrrega de feina per professor, d'un cop d'ull</span></li></ul>
         </article>
 
         <article class="st" data-i="7">
-          <span class="chip t-pre ln" data-es="A final de mes">A final de mes</span>
           <h2 class="split" data-es="Cierra el mes con todo cobrado y las familias contentas.">Tanca el mes amb tot cobrat i les famílies contentes.</h2>
           <p class="ln" data-es="Los recibos salen solos, las familias reciben el informe del trimestre y los intensivos se llenan avisando a todo el mundo de una vez. Tu equipo vuelve a tener tiempo para lo que importa: dar clase.">Els rebuts surten sols, les famílies reben l'informe del trimestre i els intensius s'omplen avisant tothom d'un sol cop. El teu equip torna a tenir temps per al que importa: fer classe.</p>
           <div class="row ln"><a class="btn prim" href="https://pauta-apt.pages.dev/app?onboarding" data-es="Empieza ahora">Comença ara</a></div>
@@ -370,26 +363,26 @@
     <section class="calc" id="numeros">
       <div class="wrap">
         <div class="box">
-          <div class="chead rv"><span class="chip t-ros" data-es="Haz números">Fes números</span>
+          <div class="chead rv">
           <h2 data-es="¿Cuánto te cuesta ahora mismo no tenerlo ordenado?">Quant et costa ara mateix no tenir-ho ordenat?</h2>
           <p class="lead" data-es="Mueve los valores hasta que se parezcan a tu academia.">Mou els valors fins que s'assemblin a la teva acadèmia.</p></div>
           <div class="inputs rv">
             <div class="ctl" data-k="T" style="--c:var(--lav);--ci:var(--lav-i)">
-              <div class="top"><span class="lab" data-es="Profesores">Professors</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vT">6</b><button type="button" data-d="1" aria-label="Més">+</button></div></div>
+              <div class="top"><span class="lab" data-es="Profesores">Professors</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys" data-es-aria="Menos">−</button><b class="val" id="vT">6</b><button type="button" data-d="1" aria-label="Més" data-es-aria="Más">+</button></div></div>
               <input type="range" id="iT" min="1" max="40" value="6" aria-label="Professors"><div class="viz" id="zT"></div>
             </div>
             <div class="ctl" data-k="A" style="--c:var(--cel);--ci:var(--cel-i)">
-              <div class="top"><span class="lab" data-es="Alumnos">Alumnes</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vA">120</b><button type="button" data-d="1" aria-label="Més">+</button></div></div>
+              <div class="top"><span class="lab" data-es="Alumnos">Alumnes</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys" data-es-aria="Menos">−</button><b class="val" id="vA">120</b><button type="button" data-d="1" aria-label="Més" data-es-aria="Más">+</button></div></div>
               <input type="range" id="iA" min="1" max="800" step="1" value="120" aria-label="Alumnes"><div class="viz" id="zA"></div>
             </div>
             <div class="ctl" data-k="P" style="--c:var(--pre);--ci:var(--pre-i)">
-              <div class="top"><span class="lab" data-es="Precio medio por hora">Preu mitjà per hora</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vP">18 €</b><button type="button" data-d="1" aria-label="Més">+</button></div></div>
-              <input type="range" id="iP" min="8" max="45" value="18" aria-label="Preu per hora"><div class="viz" id="zP"></div>
+              <div class="top"><span class="lab" data-es="Precio medio por hora">Preu mitjà per hora</span><div class="stp"><button type="button" data-d="-1" aria-label="Menys" data-es-aria="Menos">−</button><b class="val" id="vP">18 €</b><button type="button" data-d="1" aria-label="Més" data-es-aria="Más">+</button></div></div>
+              <input type="range" id="iP" min="8" max="45" value="18" aria-label="Preu per hora" data-es-aria="Precio por hora"><div class="viz" id="zP"></div>
             </div>
             <div class="assume2">
-              <div class="as" data-k="M"><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vM">15</b><button type="button" data-d="1" aria-label="Més">+</button></div><small data-es="minutos de mensajes por alumno y mes">minuts de missatges per alumne i mes</small></div>
-              <div class="as" data-k="C"><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vC">4</b><button type="button" data-d="1" aria-label="Més">+</button></div><small data-es="clases por alumno y mes">classes per alumne i mes</small></div>
-              <div class="as" data-k="L"><div class="stp"><button type="button" data-d="-1" aria-label="Menys">−</button><b class="val" id="vL">15 %</b><button type="button" data-d="1" aria-label="Més">+</button></div><small data-es="de las clases no se cobran">de les classes no es cobren</small></div>
+              <div class="as" data-k="M"><div class="stp"><button type="button" data-d="-1" aria-label="Menys" data-es-aria="Menos">−</button><b class="val" id="vM">15</b><button type="button" data-d="1" aria-label="Més" data-es-aria="Más">+</button></div><small data-es="minutos de mensajes por alumno y mes">minuts de missatges per alumne i mes</small></div>
+              <div class="as" data-k="C"><div class="stp"><button type="button" data-d="-1" aria-label="Menys" data-es-aria="Menos">−</button><b class="val" id="vC">4</b><button type="button" data-d="1" aria-label="Més" data-es-aria="Más">+</button></div><small data-es="clases por alumno y mes">classes per alumne i mes</small></div>
+              <div class="as" data-k="L"><div class="stp"><button type="button" data-d="-1" aria-label="Menys" data-es-aria="Menos">−</button><b class="val" id="vL">15 %</b><button type="button" data-d="1" aria-label="Més" data-es-aria="Más">+</button></div><small data-es="de las clases no se cobran">de les classes no es cobren</small></div>
             </div>
             <p class="note" data-es="Estimación orientativa: cambia cualquier valor para ajustarla a tu academia.">Estimació orientativa: canvia qualsevol valor per ajustar-la a la teva acadèmia.</p>
           </div>
@@ -406,7 +399,7 @@
     <!-- COM COMENCES: pla en tres passos (redueix la por al canvi) -->
     <section class="plan" id="comencar">
       <div class="wrap">
-        <div class="center rv"><span class="chip t-cel" data-es="Empezar">Començar</span><h2 style="margin-top:16px" data-es="Tu academia, funcionando en una tarde">La teva acadèmia, funcionant en una tarda</h2></div>
+        <div class="center rv"><h2 data-es="Tu academia, funcionando en una tarde">La teva acadèmia, funcionant en una tarda</h2></div>
         <div class="steps">
           <div class="step rv"><div class="num" style="background:var(--lav);color:var(--lav-i)">1</div><h3 data-es="Importa los alumnos">Importa els alumnes</h3><p data-es="Desde Excel o Google Sheets. Pauta comprueba los datos antes de importar y no duplica nada si lo repites.">Des d'Excel o Google Sheets. Pauta comprova les dades abans d'importar i no duplica res si ho repeteixes.</p></div>
           <div class="step rv"><div class="num" style="background:var(--men);color:var(--men-i)">2</div><h3 data-es="Añade a tu equipo">Afegeix el teu equip</h3><p data-es="Cada profesor con su acceso, su color y sus clases. Tú decides quién ve los cobros.">Cada professor amb el seu accés, el seu color i les seves classes. Tu decideixes qui veu els cobraments.</p></div>
@@ -432,7 +425,7 @@
     <!-- PRIVACITAT -->
     <section class="plan" id="privacitat">
       <div class="wrap">
-        <div class="center rv"><span class="chip t-men" data-es="Privacidad">Privacitat</span><h2 style="margin-top:16px" data-es="Los datos de las familias, bien guardados" >Les dades de les famílies, ben guardades</h2><p style="margin-top:12px;color:var(--ink2);max-width:640px;margin-inline:auto" data-es="Pauta guarda nombres de menores, horarios y pagos. Por eso cada cosa tiene su lugar y su permiso.">Pauta guarda noms de menors, horaris i pagaments. Per això cada cosa té el seu lloc i el seu permís.</p></div>
+        <div class="center rv"><h2 data-es="Los datos de las familias, bien guardados" >Les dades de les famílies, ben guardades</h2><p style="margin-top:12px;color:var(--ink2);max-width:640px;margin-inline:auto" data-es="Pauta guarda nombres de menores, horarios y pagos. Por eso cada cosa tiene su lugar y su permiso.">Pauta guarda noms de menors, horaris i pagaments. Per això cada cosa té el seu lloc i el seu permís.</p></div>
         <div class="steps">
           <div class="step rv"><div class="num" style="background:var(--men);color:var(--men-i)">UE</div><h3 data-es="En Europa">A Europa</h3><p data-es="Los datos se guardan en la Unión Europea y solo el servidor de Pauta puede entrar. La base de datos no se puede consultar desde fuera.">Les dades es guarden a la Unió Europea i només hi entra el servidor de Pauta. La base de dades no es pot consultar des de fora.</p></div>
           <div class="step rv"><div class="num" style="background:var(--lav);color:var(--lav-i)">1:1</div><h3 data-es="Cada uno ve lo suyo">Cadascú veu el que li toca</h3><p data-es="Una familia solo ve a sus hijos; cada profesor, solo sus clases; el dinero, solo quien administra.">Una família només veu els seus fills; cada professor, només les seves classes; els diners, només qui administra.</p></div>
@@ -459,7 +452,7 @@
     <!-- PREGUNTES: objeccions abans de decidir -->
     <section id="preguntes" style="padding-top:0">
       <div class="wrap">
-        <div class="center rv"><span class="chip t-man" data-es="Preguntas">Preguntes</span><h2 style="margin-top:16px" data-es="Lo que nos suelen preguntar">El que ens solen preguntar</h2></div>
+        <div class="center rv"><h2 data-es="Lo que nos suelen preguntar">El que ens solen preguntar</h2></div>
         <div class="faq">
           <details class="q rv"><summary data-es="¿Cómo pasamos los datos que ya tenemos?">Com passem les dades que ja tenim?</summary><p data-es="Exportas tu Excel o Google Sheets en CSV y lo importas. Pauta revisa cada fila antes de crear nada y puedes repetirlo sin duplicar alumnos.">Exportes el teu Excel o Google Sheets en CSV i l'importes. Pauta revisa cada fila abans de crear res i ho pots repetir sense duplicar alumnes.</p></details>
           <details class="q rv"><summary data-es="¿Los profesores ven el dinero de la academia?">Els professors veuen els diners de l'acadèmia?</summary><p data-es="No. Cada tutor ve sus clases y sus alumnos. Los cobros, los recibos y la configuración solo los ve quien administra.">No. Cada tutor veu les seves classes i els seus alumnes. Els cobraments, els rebuts i la configuració només els veu qui administra.</p></details>
@@ -525,7 +518,7 @@
 
     const SCREENS = [
       { id: 'dash', tabs: () => [T_ADMIN(), 0], html: () => `
-        <div class="a" style="--d:0"><div class="eb">Acadèmia Nord · ${L('dilluns 16 de novembre', 'lunes 16 de noviembre')}</div><h4>${L('Bona tarda, Marta', 'Buenas tardes, Marta')}</h4></div>
+        <div class="a" style="--d:0"><div class="eb">${L('Acadèmia Nord', 'Academia Nord')} · ${L('dilluns 16 de novembre', 'lunes 16 de noviembre')}</div><h4>${L('Bona tarda, Marta', 'Buenas tardes, Marta')}</h4></div>
         <div class="a" style="--d:.1;display:flex;gap:8px"><div class="cd stat" style="flex:1;background:var(--cel)"><div class="eb">${L('Classes avui', 'Clases hoy')}</div><div class="big">32</div></div><div class="cd stat" style="flex:1;background:var(--men)"><div class="eb">${L('Ja fetes', 'Ya hechas')}</div><div class="big"><span data-count="21">0</span></div></div><div class="cd stat" style="flex:1;background:var(--man)"><div class="eb">${L('Alumnes', 'Alumnos')}</div><div class="big">186</div></div></div>
         <div class="cd a" style="--d:.22"><div class="eb">${L('Equip · classes d\'avui', 'Equipo · clases de hoy')}</div>${tutor('Ana Soler', 9, 'lav', .3)}${tutor('Bru Vidal', 8, 'pre', .4)}${tutor('Clara Mas', 8, 'ros', .5)}${tutor('Dani Font', 7, 'cel', .6)}</div>
         <div class="cd it a" style="--d:.45;background:var(--pre)">${av('4', 'ros')}<div class="g"><b>${L('4 coses per decidir', '4 cosas por decidir')}</b><small>${L('2 canvis d\'hora, 1 classe extra i 1 pagament', '2 cambios de hora, 1 clase extra y 1 pago')}</small></div></div>` },
@@ -800,6 +793,7 @@
     function setLang(l) {
       document.documentElement.lang = l;
       nodes.forEach((el) => { el.innerHTML = l === 'es' ? el.dataset.es : el.dataset.ca; });
+      $$('[data-es-aria]').forEach((el) => { el.dataset.caAria ??= el.getAttribute('aria-label'); el.setAttribute('aria-label', l === 'es' ? el.dataset.esAria : el.dataset.caAria); });
       document.title = meta[l][0]; $('meta[name=description]').content = meta[l][1];
       $$('.lang button').forEach((b) => { const on = b.dataset.l === l; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
       splitTitles(); renderScreens(); recompute();
