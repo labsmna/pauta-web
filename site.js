@@ -26,8 +26,24 @@
   footer.innerHTML = `<div class="wrap"><div><a class="brand" href="./" style="font-size:18px">${logo(24)}Pauta</a><p style="margin-top:12px;max-width:300px" data-es="Software de gestión para academias y profesores particulares.">Programari de gestió per a acadèmies i professors particulars.</p></div>
     <div><h4 data-es="Producto">Producte</h4><nav><a href="./" data-es="Cómo funciona">Com funciona</a><a href="funcions" data-es="Funciones">Funcions</a><a href="academies" data-es="Academias">Acadèmies</a></nav></div>
     <div><h4 data-es="Confianza">Confiança</h4><nav><a href="seguretat" data-es="Seguridad y datos">Seguretat i dades</a><a href="preguntes" data-es="Preguntas">Preguntes</a></nav></div>
+    <div><h4 data-es="Legal">Legal</h4><nav><a href="privacitat" data-es="Privacidad">Privacitat</a><a href="condicions" data-es="Condiciones de uso">Condicions d'ús</a><a href="galetes" data-es="Cookies">Galetes</a><a href="encarrec" data-es="Encargo de tratamiento">Encàrrec de tractament</a></nav></div>
     <div><h4 data-es="Acceso">Accés</h4><nav><a href="https://pauta-apt.pages.dev/app?entra" data-es="Entrar">Entra</a><a href="/familia" data-es="Familias">Famílies</a><a href="https://pauta-apt.pages.dev/app?onboarding" data-es="Crear una cuenta">Crea un compte</a></nav></div></div>`;
   document.body.append(footer);
+
+  // Dades del titular als textos legals: s'omplen aquí, en un sol lloc.
+  const LEGAL = {
+    titular: 'Teo Garcia Millet',                                 // nom i cognoms o raó social
+    nif: '39540285L',                                             // NIF o CIF
+    adreca: 'Torre Santa Caterina, Cal Teleca, Manresa (Barcelona)', // adreça postal completa
+    correu: 'pauta.academies@gmail.com',                          // correu de contacte per a privacitat
+    registre: '',         // dades registrals (només si és una societat)
+  };
+  const LEGAL_PH = { titular: '[Nom o raó social]', nif: '[NIF]', adreca: '[Adreça postal]', correu: '[Correu de privacitat]', registre: '' };
+  $$('[data-legal]').forEach((el) => {
+    const k = el.dataset.legal, v = LEGAL[k];
+    if (v) { el.textContent = v; if (k === 'correu' && el.tagName === 'A') el.href = `mailto:${v}`; }
+    else { el.textContent = LEGAL_PH[k]; el.classList.add('fill'); if (!LEGAL_PH[k]) el.closest('[data-legal-opt]')?.remove(); }
+  });
   const mb = $('.menu-btn'), nl = $('#navlist');
   mb.addEventListener('click', () => { const o = nl.classList.toggle('open'); mb.setAttribute('aria-expanded', o); });
 
