@@ -79,8 +79,7 @@
     .dots { position: absolute; z-index: 4; right: 18px; top: 50%; transform: translateY(-50%); display: grid; gap: 10px; }
     .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(36,34,42,.18); transition: transform .3s var(--ease), background .3s; } .dots i.on { background: var(--ink); transform: scale(1.35); }
     .hint { position: absolute; z-index: 4; left: 50%; bottom: 22px; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: var(--ink2); display: flex; align-items: center; gap: 10px; transition: opacity .4s; }
-    .hint i { width: 22px; height: 34px; border: 2px solid #c9c3d6; border-radius: 12px; position: relative; } .hint i::after { content: ''; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: #8e89a0; animation: wheel 1.8s ease-in-out infinite; }
-    @keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(10px); } }
+    .hint i { width: 22px; height: 34px; border: 2px solid #c9c3d6; border-radius: 12px; position: relative; }
     @media (max-width: 900px) {
       .st { left: 16px !important; right: 16px !important; width: auto; top: calc(64px + var(--phh, 330px) + 40px); bottom: auto; justify-content: flex-start; }
       .st h2 { font-size: clamp(25px, 6.6vw, 32px); margin-bottom: 10px; } .st h1 { font-size: clamp(31px, 8.4vw, 40px); margin-bottom: 12px; }
@@ -161,7 +160,6 @@
     .scr.on .toastm, .scr.leaving .toastm { animation: lateIn .55s var(--spring) both; animation-delay: calc(var(--s, 6) * 1s); }
     .check { width: 50px; height: 50px; border-radius: 50%; background: var(--men); display: grid; place-items: center; } .check svg { width: 26px; height: 26px; fill: none; stroke: var(--men-i); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 26; stroke-dashoffset: 26; }
     .scr.on .check svg, .scr.leaving .check svg { animation: draw .5s ease forwards; animation-delay: calc(var(--s, 3) * 1s + .2s); } @keyframes draw { to { stroke-dashoffset: 0; } }
-    .scr.on .pulse, .scr.leaving .pulse { animation: pulse 1.6s ease-in-out infinite; animation-delay: 2.4s; } @keyframes pulse { 50% { transform: scale(1.12); } }
     .lock { position: absolute; inset: 0; background: linear-gradient(170deg, #E8E4FA 0%, #DCEBFA 40%, #FCE6D6 100%); }
     .lock .clock { text-align: center; margin-top: 4px; } .lock .clock b { display: block; font: 300 64px/1 var(--sans); letter-spacing: -.03em; color: #1d1b29; } .lock .clock span { font-size: 13px; font-weight: 700; color: #3d3a52; }
     .nt { background: rgba(255,255,255,.78); backdrop-filter: blur(12px); border-radius: 16px; padding: 9px 11px; display: flex; gap: 9px; align-items: flex-start; box-shadow: 0 6px 16px -12px rgba(42,37,64,.5); }
@@ -355,7 +353,7 @@
         </div>
 
         <div class="dots" id="dots" aria-hidden="true"></div>
-        <div class="hint" id="hint" aria-hidden="true"><i></i><span data-es="Desliza para ver cómo funciona">Llisca per veure com funciona</span></div>
+        <div class="hint" id="hint" aria-hidden="true"><span data-es="Desliza para ver cómo funciona">Llisca per veure com funciona</span></div>
       </div>
     </section>
 
